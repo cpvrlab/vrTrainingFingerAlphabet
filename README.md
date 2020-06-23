@@ -1,7 +1,8 @@
 
 # VR-Trainingsapplikation-App für Fingeralphabet
 <p align="center">
-<img src="https://cdn.sidequestvr.com/file/29914/bannerSideQuest2.png" width="80%">
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=Ahs1l0INA-w" target="_blank"><img src="http://img.youtube.com/vi/Ahs1l0INA-w/0.jpg" 
+alt="VR-Trainingsapplikation-App für Fingeralphabet Thumbnail" width="480" height="360" border="10" /></a>
     
 </p>
 <h3 align="center">
@@ -81,8 +82,9 @@ The Validation compares folowing values:
 | Fingertipdistances | Diffrence of Vector.position | Hand_tipId’s |
 
 The diffrences then gets weighted and it determents if its right or wrong.
-This process can be  observed in realtime in the insight scene (insight the oculus quest).
-![structimage](https://github.com/cpvrlab/vrTrainingFingerAlphabet/blob/master/Assets/Documents/DocumentImages/Screenshots/OculusScreenshots/ValidationWithoutWeights.jpg)
+This process can be  observed in realtime in the insight scene (insight the oculus quest).\
+
+<img src="https://github.com/cpvrlab/vrTrainingFingerAlphabet/blob/master/Assets/Documents/DocumentImages/Screenshots/OculusScreenshots/ValidationWithoutWeights.jpg" width="40%">
 
 
 ## Handdata
@@ -101,6 +103,7 @@ The Textfile is as followed formated:
 | : | Segment the OVRBone Attributs |
 | () | Segment the Transform values |
 | , | Segment the float values |
+
 The Textfile gets then splited and converts the values back to a handformstruct...
 
 ## Domainmodel
