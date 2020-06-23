@@ -32,25 +32,10 @@ The Readme file explains shortly folowing topics:
 ## Setup
 1. Clone the unity project
 ```sh
-git clone https://...
+git clone https://github.com/cpvrlab/vrTrainingFingerAlphabet.git
 ```
 2. Open Unity Hub->Add, Select the Project where its cloned
 3. Select Unity Version (2019.3.06f) and open the project
-
-```
-project
-└───Assets
-│   └───Documents
-│   └───Materials
-│   └───Oculus
-│   └───Prefabs
-│   └───Resources
-│   └───Scenes
-│   └───Scripts
-│   └───TestFiles
-│   └───TextMesh Pro
-│   └───XR
-```
 
 ## Documentation
 
