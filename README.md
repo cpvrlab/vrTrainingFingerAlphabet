@@ -1,7 +1,7 @@
 
 # VR-Trainingsapplikation-App für Fingeralphabet
 <p align="center">
-<img src="https://cdn.sidequestvr.com/file/29914/bannerSideQuest2.png" width="60%">
+<img src="https://cdn.sidequestvr.com/file/29914/bannerSideQuest2.png" width="80%">
     
 </p>
 <h3 align="center">
@@ -15,6 +15,8 @@ IPA-Abschlussarbeit von Cédric Girardin
 ## Overview
 This is the final project (IPA) of our apprentice Cédric Girardin at the computer science department of the Berne University of Applied Science.\
 The VR-Application runs on a Oculus-Quest and uses its Hand tracking feature. The Application can validate up to 23 Hand signs from the German Alphabet.
+
+This Project was made in 2 weeks/ 10 Work days: 30.03.2020-08.05.2020 (Yes, the documentation was also made within does 2 weeks).
 
 The Readme file explains shortly folowing topics:
 * Setup
@@ -50,7 +52,8 @@ project
 ```
 
 ## Documentation
-The Documentation is in German and uses the HERMES 5.1 Project method.
+
+The [Documentation](https://github.com/cpvrlab/vrTrainingFingerAlphabet/blob/master/Assets/Documents/IPA_C%C3%A9dricGirardin.pdf) is in German and uses the HERMES 5.1 Project method.
 
 ```
 └───Assets
@@ -76,15 +79,16 @@ The Validation compares folowing values:
 | Handorientation | Vector.up | Hand_WristRoot |
 | Fingerangle | localEulerAngles Z | Intermediate BonesId’s and distal BoneId’s |
 | Fingertipdistances | Diffrence of Vector.position | Hand_tipId’s |
+
 The diffrences then gets weighted and it determents if its right or wrong.
 This process can be  observed in realtime in the insight scene (insight the oculus quest).
-![structimage](https://www.researchgate.net/profile/Paul_Fishwick/publication/228888064/figure/fig2/AS:647923578712064@1531488427021/Example-of-converting-an-array-of-a-struct-in-C-into-JavaScript.png)
+![structimage](https://github.com/cpvrlab/vrTrainingFingerAlphabet/blob/master/Assets/Documents/DocumentImages/Screenshots/OculusScreenshots/ValidationWithoutWeights.jpg)
 
 
 ## Handdata
 In the insight scene is a save button.
 When pressed it creates a Handformstruct:\
-![structimage](https://www.researchgate.net/profile/Paul_Fishwick/publication/228888064/figure/fig2/AS:647923578712064@1531488427021/Example-of-converting-an-array-of-a-struct-in-C-into-JavaScript.png)
+![structimage](https://github.com/cpvrlab/vrTrainingFingerAlphabet/blob/master/Assets/Documents/DocumentImages/HandformStruct.png)
 
 This Handformstruct will then be saved in the handdata.txt file.
 Note: I wanted to save it in a json file but I had insufficent time.\
@@ -100,4 +104,5 @@ The Textfile is as followed formated:
 The Textfile gets then splited and converts the values back to a handformstruct...
 
 ## Domainmodel
-![structimage](https://www.researchgate.net/profile/Paul_Fishwick/publication/228888064/figure/fig2/AS:647923578712064@1531488427021/Example-of-converting-an-array-of-a-struct-in-C-into-JavaScript.png)
+![structimage](https://github.com/cpvrlab/vrTrainingFingerAlphabet/blob/master/Assets/Documents/DocumentImages/KlassendiagrammRealisierung2.png)
+
