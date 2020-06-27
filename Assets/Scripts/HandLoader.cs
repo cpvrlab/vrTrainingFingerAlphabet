@@ -4,6 +4,7 @@ using System.IO;
 using UnityEngine;
 using System;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 /// <summary>
 /// Loads handdata.txt file and converts them to HandForm struct
@@ -18,14 +19,13 @@ public class HandLoader : MonoBehaviour
 
     private List<HandForm> _LoadedHandForms;
     private bool _Loaded = false;
-    private string _TestPath = "Assets/TestFiles/handdata.txt";
+    private string _TestPath = "Assets/TestFiles/handdata.json";
 
     #endregion
 
     #region UnityFunctions
     private void Awake()
     {
-
         _LoadedHandForms = new List<HandForm>();
         FileName = Application.persistentDataPath + "/" + FileName;
         
@@ -34,7 +34,7 @@ public class HandLoader : MonoBehaviour
         {
             if (!File.Exists(FileName))
             {
-                string tempPath = System.IO.Path.Combine(Application.streamingAssetsPath, "handdata.txt");
+                string tempPath = System.IO.Path.Combine(Application.streamingAssetsPath, FileName);
 
                 // Android only use WWW to read file
                 WWW reader = new WWW(tempPath);
@@ -61,6 +61,7 @@ public class HandLoader : MonoBehaviour
     /// <returns>HandForm object</returns>
     public HandForm GetHandForm(char alphabetChar)
     {
+        return _LoadedHandForms[0];
         foreach(HandForm hand in _LoadedHandForms)
         {
             if(hand.AlphabeticCharacter == alphabetChar)
@@ -83,31 +84,89 @@ public class HandLoader : MonoBehaviour
 
     private void LoadAllSavedHandForms(string fileName)
     {
+        Debug.Log("LoadAllSavedHandForms");
         using (StreamReader r = new StreamReader(fileName))
         {
-            // reads handata.txt 
-            string input = r.ReadToEnd();
+            // reads handata.json
+            string json = r.ReadToEnd();
+            Debug.Log(json);
+            List<SerializedHandForm> sHandForms = JsonConvert.DeserializeObject<List<SerializedHandForm>>(json);
 
-            // splits input for each new line
-            string[] handFormsString = input.Split(
-                        new[] { "\n" },
-                        StringSplitOptions.None
-                        );
-
-            // convert each line from handata.txt to HandForm
-            foreach(String s in handFormsString)
-            {
-                if (s.Length > 1)
-                {
-                    _LoadedHandForms.Add(StringToHandForm(s));
-                }
-
-            }
+            _LoadedHandForms = ConvertToHandForms(sHandForms);
 
         }
         _Loaded = true;
 
     }
+
+    #region ConvertFunctions
+
+    private List<HandForm> ConvertToHandForms(List<SerializedHandForm> sHandForms)
+    {
+        List<HandForm> nHandForms = new List<HandForm>();
+        foreach (SerializedHandForm sHandForm in sHandForms)
+            nHandForms.Add(ConvertToHandForm(sHandForm));
+
+        return nHandForms;
+    }
+
+
+    private HandForm ConvertToHandForm(SerializedHandForm sHandForm)
+    {
+        char alphabetChar       = sHandForm.AlphabeticCharacter;
+        List<OVRBone> bones     = ConvertToBones(sHandForm.SavedBones);
+        List<OVRBone> bindPoses = ConvertToBones(sHandForm.SavedBindPoses);
+        float[] tipDistances    = sHandForm.SavedTipDistances;
+        GameObject boneGo       = ConvertToTransform(sHandForm.BoneGO).gameObject;
+
+        boneGo.name = alphabetChar + "-BoneGO";
+        bones[0].Transform.parent = boneGo.transform;
+        bindPoses[0].Transform.parent = boneGo.transform;
+
+        bones[0].Transform.gameObject.name = "Bones";
+        bindPoses[0].Transform.gameObject.name = "BindPoses";
+        // set parents of the bones
+        for (int i = 1; i < bones.Count; i++)
+        {
+            bones[i].Transform.parent = GetParentBone(i, bones);
+            bones[i].Transform.gameObject.name = "Bone_" + bones[i].Id;
+
+            bindPoses[i].Transform.parent = GetParentBindPoses(i, bindPoses);
+            bindPoses[i].Transform.gameObject.name = "BindPose_" + bindPoses[i].Id;
+        }
+
+        return new HandForm(alphabetChar,
+                            bones,
+                            bindPoses,
+                            tipDistances,
+                            boneGo);
+    }
+
+    private List<OVRBone> ConvertToBones(List<SerializedOVRBone> bones)
+    {
+        List<OVRBone> nBones = new List<OVRBone>();
+        foreach (SerializedOVRBone bone in bones)
+            nBones.Add(ConvertToOVRBone(bone));
+
+        return nBones;
+
+    }
+
+    private OVRBone ConvertToOVRBone(SerializedOVRBone bone)
+    {
+        return new OVRBone(bone.Id, 
+                           bone.ParentBoneIndex, 
+                           ConvertToTransform(bone.Transform));
+    }
+
+    private Transform ConvertToTransform(SerializedTransform transform)
+    {
+        GameObject gameObj = new GameObject();
+        SerializedTransformExtention.DeserialTransform(transform, gameObj.transform);
+
+        return gameObj.transform;
+    }
+    #endregion
 
     #region StringConvertFunctions
 

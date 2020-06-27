@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEditor;
+using Newtonsoft.Json;
 
 /// <summary>
 /// converts the current Hand from the User in a HandForm object
@@ -18,14 +19,16 @@ public class HandSaver : MonoBehaviour
     public Transform HandAnchor;
     public OVRHand CurrentHand;
 
+    public DebugCanvas debug;
+
     // All possible Alphabet letters
     private static char[] ALPHABET = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'S', 'T', 'U', 'V', 'W', 'X', 'Y' };
 
     private string _FileName;
     private char _CurrentAlphabetLetter;
     private int _AlphabetId;
-    private List<OVRBone> _TempBones;
-    private List<OVRBone> _TempBindPoses;
+
+
     #endregion
 
     #region UnityFunctions
@@ -42,16 +45,22 @@ public class HandSaver : MonoBehaviour
     /// </summary>
     public void SaveHand()
     {
+        debug.Log("SaveHand");
         try
         {
-            HandForm nHandForm = GenerateFromCurrentHandForm();
+            SerializedHandForm nHandForm = GenerateSerializableFromCurrentHandForm();
 
-            SaveHandFormToTxt(nHandForm);
+            
+            string handFormJson = JsonConvert.SerializeObject(nHandForm);
+
+            debug.Log(handFormJson);
+
+            SaveJsonToFile(handFormJson);
 
         }
         catch(System.Exception e)
         {
-            Debug.Log(e.ToString());
+            debug.Log(e.ToString());
         }
 
         GetNextAlphabetLetter();
@@ -65,25 +74,27 @@ public class HandSaver : MonoBehaviour
     }
 
     #region GenerateHandForm
-    private HandForm GenerateFromCurrentHandForm()
+    private SerializedHandForm GenerateSerializableFromCurrentHandForm()
     {
-        _TempBones = new List<OVRBone>();
-        _TempBindPoses = new List<OVRBone>();
+        List<SerializedOVRBone> tempBones = new List<SerializedOVRBone>();
+        List<SerializedOVRBone> tempBindPoses = new List<SerializedOVRBone>();
 
         for (int i = 0; i < CurrentSkeleton.Bones.Count; i++)
         {
-            _TempBones.Add(CloneOVRBone(CurrentSkeleton.Bones[i]));
-            _TempBindPoses.Add(CloneOVRBone(CurrentSkeleton.BindPoses[i]));
+            OVRBone bone = CloneOVRBone(CurrentSkeleton.Bones[i]);
+            OVRBone bindPose = CloneOVRBone(CurrentSkeleton.BindPoses[i]);
+            tempBones.Add(new SerializedOVRBone(bone));
+            tempBindPoses.Add(new SerializedOVRBone(bindPose));
         }
 
         GameObject tempRootBone = GenerateRootBoneTransform();
 
 
-        return new HandForm(_CurrentAlphabetLetter,
-                            _TempBones,
-                            _TempBindPoses,
-                            HandTipData.GetCurrentTipDistances(CurrentSkeleton),
-                            tempRootBone);
+        return new SerializedHandForm(_CurrentAlphabetLetter,
+                                      tempBones,
+                                      tempBindPoses,
+                                      HandTipData.GetCurrentTipDistances(CurrentSkeleton),
+                                      tempRootBone);
     }
 
     private OVRBone CloneOVRBone(OVRBone b)
@@ -117,8 +128,34 @@ public class HandSaver : MonoBehaviour
 
     #region SaveHandForm
 
-    private void SaveHandFormToTxt(HandForm handForm)
+    private void SaveJsonToFile(string json)
     {
+        _FileName = Application.persistentDataPath + "/" + "handdata.json";
+
+        FileInfo f = new FileInfo(_FileName);
+
+        // create new textfile
+        if (!f.Exists)
+        {
+            using (StreamWriter sw = f.CreateText())
+            {
+                sw.Write(json);
+            }
+        }
+        // add to existing textfile
+        else
+        {
+            using (StreamWriter sw = f.AppendText())
+            {
+                sw.Write(json);
+            }
+        }
+    }
+
+
+    private void SaveHandFormToJson(HandForm handForm)
+    {
+
         _FileName = Application.persistentDataPath + "/" + "handdata.txt";
 
         FileInfo f = new FileInfo(_FileName);

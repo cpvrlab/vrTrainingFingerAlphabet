@@ -381,9 +381,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1c92d77612c0da4fbc62727b0c80f63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentSkeleton: {fileID: 0}
+  CurrentSkeleton: {fileID: 1854950962}
   HandAnchor: {fileID: 1544471842}
   CurrentHand: {fileID: 1854950967}
+  debug: {fileID: 453896187}
 --- !u!4 &754927296
 Transform:
   m_ObjectHideFlags: 0
@@ -392,7 +393,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 754927294}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.40300012}
+  m_LocalPosition: {x: 0, y: 0.883, z: 0.40300012}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1899507778}
@@ -950,6 +951,18 @@ MonoBehaviour:
   _skeletonMaterial: {fileID: 0}
   _capsuleMaterial: {fileID: 0}
   _systemGestureMaterial: {fileID: 0}
+--- !u!114 &1854950962 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2344439309991331350, guid: 5d96bda501bbada48acdc7fc64007159,
+    type: 3}
+  m_PrefabInstance: {fileID: 1854950958}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1854950959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 674a40251fe8ad841b18517ac5209957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1854950967 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2344227884377302006, guid: 5d96bda501bbada48acdc7fc64007159,
@@ -1052,7 +1065,7 @@ PrefabInstance:
     - target: {fileID: 8081475529523796205, guid: 40ec62cf90eba2c479010d6e98cbd303,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.156
+      value: -0.15600002
       objectReference: {fileID: 0}
     - target: {fileID: 8081475529523796205, guid: 40ec62cf90eba2c479010d6e98cbd303,
         type: 3}
@@ -1463,6 +1476,21 @@ PrefabInstance:
       propertyPath: ActiveMeshMaterial
       value: 
       objectReference: {fileID: 2100000, guid: d8dc3bfe8526f674b80fae9aff64b000, type: 2}
+    - target: {fileID: 249837025955261363, guid: 5aea1c789db8b8c4c8edb176c2339db9,
+        type: 3}
+      propertyPath: OffsetToHead.z
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 249837025955261363, guid: 5aea1c789db8b8c4c8edb176c2339db9,
+        type: 3}
+      propertyPath: OffsetToHead.x
+      value: -0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 249837025955261363, guid: 5aea1c789db8b8c4c8edb176c2339db9,
+        type: 3}
+      propertyPath: OffsetToHead.y
+      value: -0.3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5aea1c789db8b8c4c8edb176c2339db9, type: 3}
 --- !u!4 &249837027718332365 stripped
@@ -1483,11 +1511,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: HandLoader
       objectReference: {fileID: 0}
+    - target: {fileID: 2553577917670391321, guid: 669fa60469cc1644994492d624d8f7d0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2553577917670391322, guid: 669fa60469cc1644994492d624d8f7d0,
         type: 3}
       propertyPath: debug
       value: 
       objectReference: {fileID: 453896187}
+    - target: {fileID: 2553577917670391322, guid: 669fa60469cc1644994492d624d8f7d0,
+        type: 3}
+      propertyPath: FileName
+      value: handdata.json
+      objectReference: {fileID: 0}
     - target: {fileID: 2553577917670391323, guid: 669fa60469cc1644994492d624d8f7d0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1812,6 +1850,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: HandManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 6663558989223508453, guid: f7b900df829fa4044ba6770eb29a4d2f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7b900df829fa4044ba6770eb29a4d2f, type: 3}

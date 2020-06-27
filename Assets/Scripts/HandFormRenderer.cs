@@ -17,6 +17,7 @@ public class HandFormRenderer : MonoBehaviour
     public Material ActiveMeshMaterial;
     public Material ActiveMaterial;
     public Material WrongMaterial;
+    public Vector3 OffsetToHead = new Vector3(-0.15f,-0.35f,0.4f);
 
     // default width for the Linerenderer
     private const float LINE_RENDERER_WIDTH = 0.005f;
@@ -30,6 +31,8 @@ public class HandFormRenderer : MonoBehaviour
     private OVRMesh _OVRMesh;
     private Material _SkeletonMaterial;
     private Material _DefaultMaterialMeshRenderer;
+    private bool _Initalized = false;
+    private Transform _MainCameraRoot;
 
     #endregion
 
@@ -40,9 +43,10 @@ public class HandFormRenderer : MonoBehaviour
         _OVRMesh = GetComponent<OVRMesh>();
         _SkinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>();
         _DefaultMaterialMeshRenderer = _SkinnedMeshRenderer.material;
-
+        _MainCameraRoot = Camera.main.transform;
 
     }
+
     #endregion
 
     #region DisplayFunctions
@@ -53,17 +57,22 @@ public class HandFormRenderer : MonoBehaviour
     /// <param name="savedHand">The Handdata that should be Renderd</param>
     public void DisplayHandForm(HandForm savedHand)
     {
+        _Initalized = false;
         // Destroy previous Virtualhand 
         Destroy(_SkeletonGO);
 
         // Skeleton
         ShowSkeletonBones(savedHand);
 
+
+
         // Orientation
         ShowHandOrientation(savedHand);
 
         // Tip Distances
         ShowTipDistances(savedHand);
+
+        _Initalized = true;
 
         if (_OVRMesh == null)
             return;
@@ -115,7 +124,7 @@ public class HandFormRenderer : MonoBehaviour
         InitializeMeshRenderer(savedHand);
         _SkinnedMeshRenderer.enabled = true;
     }
-
+    
     #endregion
 
     #region InitalizationFunctions
@@ -212,6 +221,28 @@ public class HandFormRenderer : MonoBehaviour
     #endregion
 
     #region VisualIndicators
+
+
+    public void UpdateVirtualHandPosition(Transform handRoot)
+    {
+
+
+
+        if (!_Initalized)
+            return;
+
+        handRoot.transform.position = _MainCameraRoot.position + OffsetToHead;
+
+        foreach (BoneVisualization tipVisaul in _TipVisualization)
+        {
+            tipVisaul.Update(_Scale, true);
+        }
+        foreach (BoneVisualization boneVisual in _BoneVisualizations)
+        {
+            boneVisual.Update(_Scale, true);
+        }
+        _WristOrientationVisualization.Update(_Scale, true);
+    }
 
     /// <summary>
     /// Changes the material of the skinned meshrenderer

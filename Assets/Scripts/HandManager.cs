@@ -27,6 +27,7 @@ public class HandManager : MonoBehaviour
     private HandForm _ObjectiveHandForm;
     private HandFormValidator _Validator;
 
+
     #endregion
 
     #region UnityFunctions
@@ -36,15 +37,25 @@ public class HandManager : MonoBehaviour
         _CurrentLetter = GetRandomAlphabetLetter();
         _Validator = GetComponent<HandFormValidator>();
         _Validator.VirtualHand = VirtualHand;
+
         GetNewLetter();
         StartCoroutine(AfterLoaded());
+
     }
 
     void Update()
     {
+
+        //if (_ObjectiveHandForm.BoneGO != null)
+        //    VirtualHand.UpdateVirtualHandPosition(_ObjectiveHandForm.BoneGO.transform);
+
+
         // Checks if Handforms are ready to be validated
-        if(_HandFormsLoaded)
+        if (_HandFormsLoaded)
         {
+            // Set VirtualHandPosition
+
+
             // Update _CurrentTime
             _CurrentTime += Time.deltaTime;
 
@@ -66,6 +77,8 @@ public class HandManager : MonoBehaviour
     #endregion
 
     #region HandFormMangamentFunctions
+
+    // TODO find other solution (callback for example)!
     private IEnumerator AfterLoaded()
     {
         while (!HandData.IsDataLoaded())
@@ -75,7 +88,7 @@ public class HandManager : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         LoadNewHand();
-        _HandFormsLoaded = true;
+        // _HandFormsLoaded = true;
 
     }
 
@@ -89,6 +102,9 @@ public class HandManager : MonoBehaviour
         _ObjectiveHandForm = HandData.GetHandForm(alphabetChar);
 
         VirtualHand.DisplayHandForm(_ObjectiveHandForm);
+
+        VirtualHand.UpdateVirtualHandPosition(_ObjectiveHandForm.BoneGO.transform);
+
     }
 
 
