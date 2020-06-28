@@ -1,20 +1,30 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿/********************************************************************************//*
+Created as part of a Bsc in Computer Science for the BFH Biel
+Created by:   Steven Henz
+Date:         26.05.20
+Email:        steven.henz93@gmail.com
+************************************************************************************/
+using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// Shows how VRUIVibration can be implemented. Specifically made for the VRUIButtonBehaviour component used
+/// with the Oculus Quest.
+/// </summary>
 public class VRUIVibrationButtonOVR : VRUIVibration
 {
     [SerializeField]
     [Tooltip("If this is true the controller will vibrate.")]
     private bool vibrate = true;
 
-    private VRUIGestureController.HandSide hand;
-
     public override void Vibrate()
     {
         if (vibrate)
         {
-            if (GetComponent<VRUIButtonBehaviour>().LastRegisteredGestureController.Hand == VRUIGestureController.HandSide.left)
+            VRUIGestureController gestureController = GetComponent<VRUIButtonBehaviour>().LastRegisteredGestureController;
+            if (!gestureController)
+                return;
+            if (gestureController.Hand == VRUIGestureController.HandSide.left)
             {
                 StartCoroutine(OVRVibration(VibrationFrequency, VibrationAmplitude, VibrationDuration, OVRInput.Controller.LTouch));
             }

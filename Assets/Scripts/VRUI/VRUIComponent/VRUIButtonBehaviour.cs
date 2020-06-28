@@ -1,9 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿/********************************************************************************//*
+Created as part of a Bsc in Computer Science for the BFH Biel
+Created by:   Steven Henz
+Date:         26.05.20
+Email:        steven.henz93@gmail.com
+************************************************************************************/
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// Simulates a 3D button that needs to be physically touched to use it.
+/// </summary>
 [RequireComponent(typeof(Rigidbody))]
+[ExecuteInEditMode]
 public class VRUIButtonBehaviour : MonoBehaviour
 {
     [Header("Interaction Settings")]
@@ -37,16 +45,38 @@ public class VRUIButtonBehaviour : MonoBehaviour
     [SerializeField]
     [Tooltip("The material of the button after it was pressed.")]
     private Material activeMaterial;
-    [Header("UnityEvents")]
     //Events that fire when the button gets activated/changes material.
+    [System.Serializable]
+    public class VRUIOnButtonDownEvent : UnityEvent<string> { }
+    [Header("UnityEvents")]
     [SerializeField]
-    private UnityEvent onVRUIButtonDown = null;
+    public VRUIOnButtonDownEvent m_onVRUIButtonDown;
+    public VRUIOnButtonDownEvent onVRUIButtonDown
+    {
+        get { return m_onVRUIButtonDown; }
+        set { m_onVRUIButtonDown = value; }
+    }
     //Events that fire every frame the button is active.
+    [System.Serializable]
+    public class VRUIOnButtonEvent : UnityEvent<string> { }
     [SerializeField]
-    private UnityEvent onVRUIButton = null;
+    private VRUIOnButtonEvent m_onVRUIButton;
+    public VRUIOnButtonEvent onVRUIButton
+    {
+        get { return m_onVRUIButton; }
+        set { m_onVRUIButton = value; }
+    }
     //Events that fire when the Button deactivates.
+    [System.Serializable]
+    public class VRUIOnButtonUpEvent : UnityEvent<string> { }
     [SerializeField]
-    private UnityEvent onVRUIButtonUp = null;
+    private VRUIOnButtonUpEvent m_onVRUIButtonUp;
+    public VRUIOnButtonUpEvent onVRUIButtonUp
+    {
+        get { return m_onVRUIButtonUp; }
+        set { m_onVRUIButtonUp = value; }
+    }
+
     private VRUIVibration vibrationBehaviour;
     [Header("State")]
     [SerializeField]
@@ -77,36 +107,54 @@ public class VRUIButtonBehaviour : MonoBehaviour
     private float waitTime;
 
     private bool correctGesture = false;
+
+    private Vector3 lastScale;
+
     // Start is called before the first frame update
     void Start()
     {
-        if (allowedGestures.Length == 0)
+        if (Application.isPlaying)
         {
-            allowedGestures = new VRUIGesture[1];
-            allowedGestures[0] = VRUIGesture.IndexPointing;
+            if (allowedGestures.Length == 0)
+            {
+                allowedGestures = new VRUIGesture[1];
+                allowedGestures[0] = VRUIGesture.IndexPointing;
+            }
+            //Get componentss
+            BaseMaterial = PhysicalButton.GetComponent<Renderer>().material;
+            VibrationBehaviour = GetComponent<VRUIVibration>();
+            meshRenderer = physicalButton.GetComponent<MeshRenderer>();
+            //The rigidbody should be kinematic and unaffected by gravity.
+            Rigidbody rBody = GetComponent<Rigidbody>();
+            rBody.isKinematic = true;
+            rBody.useGravity = false;
+            //Set default values of non inspector variables
+            startPosition = currentPosition = physicalButton.transform.localPosition;
+            deltaPosition = Vector3.zero;
+            getVRUIButtonDown = false;
+            getVRUIButtonUp = true;
+            gestureController = null;
         }
-        //Get componentss
-        BaseMaterial = PhysicalButton.GetComponent<Renderer>().material;
-        VibrationBehaviour = GetComponent<VRUIVibration>();
-        meshRenderer = physicalButton.GetComponent<MeshRenderer>();
-        //The rigidbody should be kinematic and unaffected by gravity.
-        Rigidbody rBody = GetComponent<Rigidbody>();
-        rBody.isKinematic = true;
-        rBody.useGravity = false;
-        //Set default values of non inspector variables
-        startPosition = currentPosition = physicalButton.transform.localPosition;
-        deltaPosition = Vector3.zero;
-        getVRUIButtonDown = false;
-        getVRUIButtonUp = true;
-        gestureController = null;
+    }
+
+    private void OnEnable()
+    {
+        if (Application.isPlaying)
+            if (!BaseMaterial)
+                BaseMaterial = PhysicalButton.GetComponent<Renderer>().material;
+        lastScale = transform.localScale;
     }
 
     // Update is called once per frame
     void Update()
     {
-        UpdatePositionValues();
-        UpdateButtonStates();
-        FireButtonEvents();
+        transform.localScale = lastScale;
+        if (Application.isPlaying)
+        {
+            UpdatePositionValues();
+            UpdateButtonStates();
+            FireButtonEvents();
+        }
     }
 
     private void UpdatePositionValues()
@@ -126,22 +174,19 @@ public class VRUIButtonBehaviour : MonoBehaviour
         {
             //If we reach the minimal push distance for the activation, getVRUIButton is true
             getVRUIButton = Mathf.Abs(deltaPosition.y) >= (MaxPushDistance * minPushToActivate);
-            //Debug.Log("Button Active: " + getVRUIButton + "; Delta: " + deltaPosition.y);
         }
-        //Debug.Log("Button DeltaY=" + Mathf.Abs(deltaPosition.y));
         //ButtonDown should only be true at that moment where the button activates
         GetVRUIButtonDown = getVRUIButton;
         //ButtonUp should only be true at that moment where the button deactivates
         GetVRUIButtonUp = !getVRUIButton;
     }
 
-    //TODO: Check if buttonup/down can be invoked here instead of the seperate methods
     private void FireButtonEvents()
     {
         if (getVRUIButton)
         {
             meshRenderer.material = activeMaterial;
-            onVRUIButton.Invoke();
+            m_onVRUIButton.Invoke(name);
         }
         else
         {
@@ -151,27 +196,36 @@ public class VRUIButtonBehaviour : MonoBehaviour
 
     void FixedUpdate()
     {
+        //if the object that touches the button gets deactivated, reset the touching object references
+        if (touchingObjectTransform)
+        {
+            if (!touchingObjectTransform.gameObject.activeInHierarchy)
+            {
+                touchingObjectTransform = null;
+
+                startTouchPosition = Vector3.zero;
+                currentTouchPosition = Vector3.zero;
+                buttonIsTouched = false;
+            }
+        }
         //Move button according to the position of the finger/hand that touches it, if our maxPushDistance is bigger than 0.
-        if (buttonIsTouched && maxPushDistance > 0)
+        if (buttonIsTouched && MaxPushDistance > 0)
         {
             currentTouchPosition = touchingObjectTransform.position;
             deltaTouchPosition = currentTouchPosition - startTouchPosition;
-            float maxDeltaFinger = Mathf.Max(Mathf.Abs(deltaTouchPosition.x), Mathf.Abs(deltaTouchPosition.y), Mathf.Abs(deltaTouchPosition.z)); //TODO: Vector algebra for this?
+            float maxDeltaFinger = Mathf.Max(Mathf.Abs(deltaTouchPosition.x), Mathf.Abs(deltaTouchPosition.y), Mathf.Abs(deltaTouchPosition.z));
 
-            if (Mathf.Abs(deltaTouchPosition.y) < maxPushDistance && maxDeltaFinger > 0.0f)
+            if (Mathf.Abs(deltaTouchPosition.y) < MaxPushDistance && maxDeltaFinger > 0.0f)
             {
-                //Vector3 targetPos = new Vector3(physicalButton.transform.localPosition.x, physicalButton.transform.localPosition.y - maxDeltaFinger / physicalButton.transform.lossyScale.y, physicalButton.transform.localPosition.z);
                 Vector3 targetPos = new Vector3(physicalButton.transform.localPosition.x, physicalButton.transform.localPosition.y - maxDeltaFinger, physicalButton.transform.localPosition.z);
                 //The button should not be able to move farther away than the maxPushDistance 
                 //TODO: Better calculation. maybe the buttons local position is not (0, 0, 0)
-                if (targetPos.y < -maxPushDistance)
+                if (targetPos.y < -MaxPushDistance)
                 {
-                    //physicalButton.transform.localPosition = new Vector3(physicalButton.transform.localPosition.x, -maxPushDistance, physicalButton.transform.localPosition.z);
                     physicalButton.transform.localPosition = Vector3.Lerp(physicalButton.transform.localPosition, new Vector3(physicalButton.transform.localPosition.x, -maxPushDistance, physicalButton.transform.localPosition.z), stiffness * 2);
                 }
                 else
                 {
-                    //physicalButton.transform.localPosition = targetPos;
                     physicalButton.transform.localPosition = Vector3.Lerp(physicalButton.transform.localPosition, targetPos, stiffness);
                 }
             }
@@ -180,7 +234,7 @@ public class VRUIButtonBehaviour : MonoBehaviour
         //If the button is not touched slowly return it to its startPosition
         else if (currentPosition != startPosition)
         {
-            waitTime += Time.deltaTime;
+            waitTime += Time.fixedDeltaTime;
             //Only move the button to its start position after the chosen delay
             if (waitTime >= returnDelay)
             {
@@ -191,9 +245,12 @@ public class VRUIButtonBehaviour : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        gestureController = other.attachedRigidbody.gameObject.GetComponent<VRUIGestureController>();
         if (useGestureController)
         {
+            if (other.attachedRigidbody)
+                gestureController = other.attachedRigidbody.gameObject.GetComponent<VRUIGestureController>();
+            else
+                return;
             if (!gestureController)
                 return;
             if (!CorrectGestureUsed())
@@ -217,12 +274,14 @@ public class VRUIButtonBehaviour : MonoBehaviour
     {
         if (useGestureController)
         {
-            gestureController = other.attachedRigidbody.gameObject.GetComponent<VRUIGestureController>();
+            if (other.attachedRigidbody)
+                gestureController = other.attachedRigidbody.gameObject.GetComponent<VRUIGestureController>();
+            else
+                return;
             if (!gestureController)
                 return;
         }
         touchingObjectTransform = null;
-
         buttonIsTouched = false;
     }
 
@@ -239,7 +298,6 @@ public class VRUIButtonBehaviour : MonoBehaviour
         return correctGesture;
     }
 
-    //TODO: besserer name, wie heisst dieses Konzept?
     private bool GetVRUIButtonDown
     {
         get { return getVRUIButtonDown; }
@@ -251,7 +309,7 @@ public class VRUIButtonBehaviour : MonoBehaviour
             getVRUIButtonDown = value;
             if (getVRUIButtonDown)
             {
-                onVRUIButtonDown.Invoke();
+                m_onVRUIButtonDown.Invoke(name);
             }
         }
     }
@@ -267,7 +325,7 @@ public class VRUIButtonBehaviour : MonoBehaviour
             getVRUIButtonUp = value;
             if (getVRUIButtonUp)
             {
-                onVRUIButtonUp.Invoke();
+                m_onVRUIButtonUp.Invoke(name);
             }
         }
     }

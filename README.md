@@ -55,6 +55,8 @@ The Unity Project uses folowing plugins:
 | ------ | ------ |
 | ui_ux_in_vr_2019_2 | https://github.com/soma1294/ui_ux_in_vr_2019_2 |
 | Oculus Integration | https://assetstore.unity.com/packages/tools/integration/oculus-integration-82022 |
+| JSON .NET For Unity | https://assetstore.unity.com/packages/tools/input-management/json-net-for-unity-11347#description |
+
 
 ## Handform validation
 To validate a Handform, it loads a saved hand into the scene, and compares it values with the current hand.\

@@ -1,0 +1,71 @@
+{
+  "LanguageTag": [
+    "en",
+    "de",
+    "fr",
+    "nl"
+  ],
+  "DISCLAMER_TITLE":  [
+    "Disclamer",
+    "Hinweis",
+    "Avertissement",
+    "Opmerking"
+  ],
+  "DISCLAMER_TEXT": [
+    "Don’t try to force your hand into a Handpose! \n Press the skip button instead. The application is not perfect for every hand type. \n \n  The letters J, R and Z are not implemented, because they contain movements or need to cross fingers. \n Press the gray button to continue...",
+      
+    "Krampfen Sie nich Ihre Hand in eine Handpose! \n Drücken Sie besser den Überspring button, die Applikation ist nicht prefekt. \n \n Die Buchstaben J, R und Z konnten nicht implementiert werden, da diese Bewegungen oder fingerkreuzngen beinhalten. \n Drücken Sie den Grauen button um fortzusetzen...",
+      
+    "Ne forcer pas votre main dans une position inconfortable ! \n Je vous conseille à la place d'appuyer sur le bouton ignorer. L'application n'est pas encore parfaite pour toutes les types de main. \n \n Les lettres J, R et Z n'ont pas pu être appliquées car elles impliquent des mouvements ou des croisements de doigts. \n Appuyez sur le bouton gris pour continuer.",
+      
+    "Probeer je hand niet te forceren in een Handpose! \n Druk in plaats daarvan op de skip-knop. De toepassing is niet perfect voor elk type hand. \n \n De letters J, R en Z zijn niet geimplementeerd, omdat ze bewegingen bevatten of vingers moeten kruisen. \n Druk op de grijze knop om verder te gaan..."
+  ],
+  "START_TITEL":  [
+    "VR-Trainingsapplication for \n ASL Fingeralphabet",
+    "VR-Trainingsapplikation für \n das Deutsches Fingeralphabet",
+    "VR-Application d'entrainement pour l'alphabet des signes en langue françaises.",
+    "VR-trainingsapplicatie voor het Vlaamse Vingeralfabet"
+  ],
+  "START_LEARN":  [
+    "Learn",
+    "Lernen",
+    "Apprendre",
+    "Leren"
+  ],
+  "START_TEST":  [
+    "Test",
+    "Prüfen",
+    "Tester",
+    "Testen"
+  ],
+  "START_SETTINGS":  [
+    "Settings",
+    "Einstellungen",
+    "Paramètres",
+    "Instellingen"
+  ],
+  "ALPHABET_TEXT":  [
+    "The current asked \n Letter is:",
+    "Der aktuell gefragte \n Buchstabe ist:",
+    "La lettre actuellement \n demandée est:",
+    "De brief die op dit moment \n wordt gevraagd is:"
+  ],
+  "CONTROLPANEL_SKIP":  [
+    "Skip",
+    "Überspringen",
+    "Ignorer",
+    "Overslaan"
+  ],
+  "CONTROLPANEL_EXIT":  [
+    "Exit",
+    "Beenden",
+    "Terminer",
+    "Exit"
+  ],
+  "DEBUG_LETTERTITLE":  [
+    "Letter",
+    "Buchstabe",
+    "Caractère",
+    "Brief"
+  ]
+}

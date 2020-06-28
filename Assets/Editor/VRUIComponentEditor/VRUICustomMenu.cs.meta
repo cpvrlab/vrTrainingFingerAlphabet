@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 0af66490dc8ee9648851e8977b30b828
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - vruiScrollPanelPref: {fileID: 8424410586084109569, guid: 40ec62cf90eba2c479010d6e98cbd303,
+      type: 3}
+  - vruiButtonPref: {instanceID: 0}
+  - vruiTogglePref: {instanceID: 0}
+  - vruiSliderPref: {instanceID: 0}
+  - vruiTextPref: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,7 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿/********************************************************************************//*
+Created as part of a Bsc in Computer Science for the BFH Biel
+Created by:   Steven Henz
+Date:         26.05.20
+Email:        steven.henz93@gmail.com
+************************************************************************************/
 using UnityEngine;
 
+/// <summary>
+/// The base class VRUIGestureController. Used in conjunction with the VRUIElements to make sure the correct gesture is used to interact.
+/// Can be used as is for testing or be implemented to create your own gesture recognition
+/// </summary>
 public class VRUIGestureController : MonoBehaviour
 {
     public enum HandSide

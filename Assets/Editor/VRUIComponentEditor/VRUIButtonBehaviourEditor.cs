@@ -1,8 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿/********************************************************************************//*
+Created as part of a Bsc in Computer Science for the BFH Biel
+Created by:   Steven Henz
+Date:         26.05.20
+Email:        steven.henz93@gmail.com
+************************************************************************************/
 using UnityEngine;
 using UnityEditor;
 
+/// <summary>
+/// The Custom Editor Script for the VRUIButtonBehaviour Script. Among other things draws the wire preview for the scene view.
+/// </summary>
 [CustomEditor(typeof(VRUIButtonBehaviour)), CanEditMultipleObjects]
 public class VRUIButtonBehaviourEditor : Editor
 {
@@ -89,23 +96,25 @@ public class VRUIButtonBehaviourEditor : Editor
         {
             GameObject button = m_target.PhysicalButton;
             Collider collider = button.GetComponent<Collider>();
-            //Create a box preview
+            //Creates a box preview
             if (collider.GetType() == typeof(BoxCollider))
             {
                 Vector3 size = ((BoxCollider)collider).size;
-                Vector3 buttonSize = new Vector3(size.x * button.transform.localScale.x, size.y * button.transform.localScale.y, size.z * button.transform.localScale.z);
                 //The position of the maxPushDistance preview box (magenta)
                 Vector3 previewPosition = new Vector3(0f, -m_target.MaxPushDistance / button.transform.localScale.y, 0f);
                 Matrix4x4 matrix = button.transform.localToWorldMatrix * Matrix4x4.Translate(previewPosition);
                 Handles.matrix = matrix;
                 Handles.color = Color.magenta;
-                Handles.DrawWireCube(Vector3.zero, Vector3.one);
+                Vector3 drawAtPosition = Vector3.zero;
+                if (((BoxCollider)collider).center != Vector3.zero)
+                    drawAtPosition = ((BoxCollider)collider).center;
+                Handles.DrawWireCube(drawAtPosition, size);
                 //The position of the minPushDistance preview box (yellow)
                 previewPosition = new Vector3(0f, -(m_target.MaxPushDistance * m_target.MinPushToActivate) / button.transform.localScale.y, 0f);
                 matrix = button.transform.localToWorldMatrix * Matrix4x4.Translate(previewPosition);
                 Handles.matrix = matrix;
                 Handles.color = Color.yellow;
-                Handles.DrawWireCube(Vector3.zero, Vector3.one);
+                Handles.DrawWireCube(drawAtPosition, size);
             }
         }
     }

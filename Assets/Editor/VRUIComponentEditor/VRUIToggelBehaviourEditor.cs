@@ -1,8 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿/********************************************************************************//*
+Created as part of a Bsc in Computer Science for the BFH Biel
+Created by:   Steven Henz
+Date:         26.05.20
+Email:        steven.henz93@gmail.com
+************************************************************************************/
 using UnityEngine;
 using UnityEditor;
 
+/// <summary>
+/// The Custom Editor Script for the VRUIToggleBehaviour Script. Amongst other things draws the wire previews from the scene view.
+/// </summary>
 [CustomEditor(typeof(VRUIToggleBehaviour)), CanEditMultipleObjects]
 public class VRUIToggleBehaviourEditor : Editor
 {
@@ -27,6 +34,9 @@ public class VRUIToggleBehaviourEditor : Editor
             EditorGUILayout.HelpBox("No toggle assigned yet.\nPress the \"Create VRUIToggle\" toggle to do so.", MessageType.Warning);
     }
 
+    /// <summary>
+    /// Creates the lowest button in the inspector. Has logic to check if all of the necessary components are present.
+    /// </summary>
     private void DrawCreateToggleObjectButton()
     {
         if (GUILayout.Button(new GUIContent("Create/Assign VRUIToggle", CREATE_TOGGLE_TOOLTIP), GUILayout.Height(CREATE_TOGGLE_HEIGHT)))
@@ -89,29 +99,31 @@ public class VRUIToggleBehaviourEditor : Editor
         {
             GameObject toggle = m_target.PhysicalToggle;
             Collider collider = toggle.GetComponent<Collider>();
-            //Create a box preview
+            //Creates a box preview
             if (collider.GetType() == typeof(BoxCollider))
             {
                 Vector3 size = ((BoxCollider)collider).size;
-                Vector3 toggleSize = new Vector3(size.x * toggle.transform.localScale.x, size.y * toggle.transform.localScale.y, size.z * toggle.transform.localScale.z);
                 //The position of the maxPushDistance preview box (magenta)
                 Vector3 previewPosition = new Vector3(0f, -m_target.MaxPushDistance / toggle.transform.localScale.y, 0f);
                 Matrix4x4 matrix = toggle.transform.localToWorldMatrix * Matrix4x4.Translate(previewPosition);
                 Handles.matrix = matrix;
                 Handles.color = Color.magenta;
-                Handles.DrawWireCube(Vector3.zero, Vector3.one);
+                Vector3 drawAtPosition = Vector3.zero;
+                if (((BoxCollider)collider).center != Vector3.zero)
+                    drawAtPosition = ((BoxCollider)collider).center;
+                Handles.DrawWireCube(drawAtPosition, size);
                 //The position of the minPushDistance preview box (yellow)
                 previewPosition = new Vector3(0f, -(m_target.MaxPushDistance * m_target.MinPushToActivate) / toggle.transform.localScale.y, 0f);
                 matrix = toggle.transform.localToWorldMatrix * Matrix4x4.Translate(previewPosition);
                 Handles.matrix = matrix;
                 Handles.color = Color.yellow;
-                Handles.DrawWireCube(Vector3.zero, Vector3.one);
+                Handles.DrawWireCube(drawAtPosition, size);
                 //The position of the stuckDistance preview box (green)
                 previewPosition = new Vector3(0f, -(m_target.MaxPushDistance * m_target.MinPushToActivate * m_target.StuckDistance) / toggle.transform.localScale.y, 0f);
                 matrix = toggle.transform.localToWorldMatrix * Matrix4x4.Translate(previewPosition);
                 Handles.matrix = matrix;
                 Handles.color = Color.green;
-                Handles.DrawWireCube(Vector3.zero, Vector3.one);
+                Handles.DrawWireCube(drawAtPosition, size);
             }
         }
     }

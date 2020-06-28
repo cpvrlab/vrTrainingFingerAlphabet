@@ -1,7 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿/********************************************************************************//*
+Created as part of a Bsc in Computer Science for the BFH Biel
+Created by:   Steven Henz
+Date:         26.05.20
+Email:        steven.henz93@gmail.com
+************************************************************************************/
 using UnityEngine;
 
+/// <summary>
+/// This abstract class can be implemented to control the controller vibration in conjunction with the VRUI components.
+/// </summary>
 public abstract class VRUIVibration : MonoBehaviour
 {
     [SerializeField]

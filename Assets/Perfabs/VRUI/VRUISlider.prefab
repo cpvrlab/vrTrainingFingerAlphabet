@@ -45,10 +45,11 @@ LineRenderer:
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8c32ffb4320d5f0408b3c96fc1bee76f, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -133,7 +134,7 @@ LineRenderer:
     alignment: 1
     textureMode: 0
     shadowBias: 0.5
-    generateLightingData: 0
+    generateLightingData: 1
   m_UseWorldSpace: 0
   m_Loop: 0
 --- !u!1 &2698538940160201712
@@ -190,7 +191,7 @@ MonoBehaviour:
   parentSize: {x: 0, y: 0, z: 0}
   anchorPosition: {x: 0, y: 0, z: 0}
   oldAnchor: 4
-  vruiPositionerChangedTransform: 0
+  vruiPositionerChangedTransform: 1
   parent: {fileID: 0}
   lastParent: {fileID: 0}
   haveToUpdateRelativeValues: 0
@@ -226,16 +227,32 @@ MonoBehaviour:
   minValue: 0
   maxValue: 100
   startValue: 0
+  currentValue: 0
   lengthOfPath: 1
   widthOfPath: 0.05
-  currentValue: 0
   zPositionKnob: -0.025
-  stifness: 0.5
+  maxAllowedDistanceToMove: 0.1
   useGestureController: 1
-  gesture: 0
-  pathMaterial: {fileID: 2100000, guid: 8c32ffb4320d5f0408b3c96fc1bee76f, type: 2}
+  allowedGestures: 00000000
+  lockoutTime: 1
+  pathMaterial: {fileID: 0}
+  knobTouchedMaterial: {fileID: 0}
   path: {fileID: 2698538939886695214}
   physicalKnob: {fileID: 2698538940427738533}
+  m_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2698538940427738533
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,10 +321,11 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

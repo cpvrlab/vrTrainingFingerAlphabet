@@ -15,7 +15,7 @@ public class HandLoader : MonoBehaviour
 {
     #region Properties
 
-    public string FileName = "handdata.txt";
+    public string FileName = "handdata.json";
 
     private List<HandForm> _LoadedHandForms;
     private bool _Loaded = false;
@@ -54,6 +54,8 @@ public class HandLoader : MonoBehaviour
     #endregion
 
     #region HandLoaderFunctions
+
+
     /// <summary>
     /// Gets the loaded HandForm object relative to the alphabetChar
     /// </summary>
@@ -139,7 +141,8 @@ public class HandLoader : MonoBehaviour
                             bones,
                             bindPoses,
                             tipDistances,
-                            boneGo);
+                            boneGo,
+                            null);
     }
 
     private List<OVRBone> ConvertToBones(List<SerializedOVRBone> bones)
@@ -190,7 +193,7 @@ public class HandLoader : MonoBehaviour
             bindPoses[i].Transform.parent = GetParentBindPoses(i, bindPoses);
         }
 
-        return new HandForm(alphabetChar, bones, bindPoses, tipDistances, transformGO.gameObject);
+        return new HandForm(alphabetChar, bones, bindPoses, tipDistances, transformGO.gameObject,null);
     }
 
     private List<OVRBone> StringToBoneList(string boneListString)

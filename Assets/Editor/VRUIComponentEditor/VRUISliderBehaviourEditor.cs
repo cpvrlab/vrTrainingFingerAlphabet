@@ -1,8 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿/********************************************************************************//*
+Created as part of a Bsc in Computer Science for the BFH Biel
+Created by:   Steven Henz
+Date:         26.05.20
+Email:        steven.henz93@gmail.com
+************************************************************************************/
 using UnityEngine;
 using UnityEditor;
 
+/// <summary>
+/// The Custom Editor Script for the VRUISliderBehaviour Script. Among other things creates the gizmo that can be used to change the slider length
+/// in the scene view.
+/// </summary>
 [CustomEditor(typeof(VRUISliderBehaviour)), CanEditMultipleObjects]
 public class VRUISliderBehaviourEditor : Editor
 {
@@ -79,10 +87,15 @@ public class VRUISliderBehaviourEditor : Editor
                     knob.transform.localPosition = Vector3.zero;
                     knob.GetComponent<BoxCollider>().isTrigger = true;
                 }
-                else if(m_target.transform.GetChild(0).gameObject.GetComponent<Collider>())
+                else
                 {
                     //Child 0 is the physical knob
                     knob = m_target.transform.GetChild(0).gameObject;
+                    //If the knob has no collider add one
+                    if (!knob.GetComponent<Collider>())
+                    {
+                        knob.AddComponent<BoxCollider>().isTrigger = true;
+                    }
                     //Create path gameobject
                     path = new GameObject();
                     path.name = "Slider Path";
@@ -113,12 +126,18 @@ public class VRUISliderBehaviourEditor : Editor
                             lineRenderer.material = m_target.PathMaterial;
                         }
                     }
-                    //If the object has a collider it is used as the knob.
-                    if (!knob && child.gameObject.GetComponent<Collider>())
+                    //If the object has no LineRenderer is is used as the knob
+                    if (!knob && !child.gameObject.GetComponent<LineRenderer>())
                     {
                         //The path and the knob can not be the same object
                         if (path != child.gameObject)
+                        {
                             knob = child.gameObject;
+                            if (!knob.GetComponent<Collider>())
+                            {
+                                knob.AddComponent<BoxCollider>().isTrigger = true;
+                            }
+                        }
                     }
                 }
                 knob.transform.SetAsFirstSibling();
@@ -151,6 +170,9 @@ public class VRUISliderBehaviourEditor : Editor
         }
     }
 
+    /// <summary>
+    /// Creates the gizmo that can be used to change the path length.
+    /// </summary>
     private void DrawLengthChooser()
     {
         float pathLength = m_target.LengthOfPath;
@@ -163,7 +185,7 @@ public class VRUISliderBehaviourEditor : Editor
         pathLength = Handles.ScaleSlider(pathLength, m_target.gameObject.transform.position, m_target.gameObject.transform.up, m_target.gameObject.transform.rotation, size, 0.1f);
         if (EditorGUI.EndChangeCheck())
         {
-            Undo.RecordObjects(new Object[] { m_target.GetComponent<VRUISliderBehaviour>(), m_target.transform }, "Undo VRUI Slider Length");
+            Undo.RecordObjects(new Object[] { m_target.GetComponent<VRUISliderBehaviour>(), m_target.transform }, "VRUI Slider Length");
 
             m_target.LengthOfPath = pathLength;
             m_target.CreatePath();

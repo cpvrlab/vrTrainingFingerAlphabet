@@ -12,6 +12,7 @@ public struct HandForm
     #region Properties
 
     public char AlphabeticCharacter;
+    public Language[] languages;
     public IList<OVRBone> SavedBones;
     public IList<OVRBone> SavedBindPoses;
     public GameObject BoneGO;
@@ -34,6 +35,7 @@ public struct HandForm
         SavedBindPoses = null;
         SavedTipDistances = tipDistances;
         BoneGO = boneGO;
+        languages = null;
     }
 
 
@@ -46,13 +48,15 @@ public struct HandForm
     /// <param name="bindPoses">BindPoses from the OVRSkeleton</param>
     /// <param name="tipDistances">float array with the distances between the tipbones</param>
     /// <param name="boneGO">The root of the hand</param>
-    public HandForm(char alphabetChar, List<OVRBone> bones, List<OVRBone> bindPoses, float[] tipDistances, GameObject boneGO)
+    /// <param name="lang">Languages in wich they use this Handform for the Letter</param>
+    public HandForm(char alphabetChar, List<OVRBone> bones, List<OVRBone> bindPoses, float[] tipDistances, GameObject boneGO, Language[] lang)
     {
         AlphabeticCharacter = alphabetChar;
         SavedBones = bones;
         SavedBindPoses = bindPoses;
         SavedTipDistances = tipDistances;
         BoneGO = boneGO;
+        languages = lang;
     }
 
 

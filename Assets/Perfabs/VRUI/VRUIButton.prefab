@@ -76,7 +76,7 @@ MonoBehaviour:
   returnDelay: 0.3
   stiffness: 0.2
   useGestureController: 1
-  gesture: 0
+  allowedGestures: 00000000
   activeMaterial: {fileID: 2100000, guid: 7d721f2301ca41b46b035aa5b2522697, type: 2}
   onVRUIButtonDown:
     m_PersistentCalls:

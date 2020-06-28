@@ -45,7 +45,7 @@ public class BallSpawner : MonoBehaviour
             ball.transform.localScale = Vector3.one * Random.Range(0.1f, 1f);
         ball.GetComponent<Rigidbody>().AddForce(transform.forward * power, ForceMode.Impulse);
         ball.GetComponent<MeshRenderer>().material = material;
-        Destroy(ball, 8f);
+        Destroy(ball, 10f);
     }
 
     public float Power
