@@ -5,6 +5,7 @@ using UnityEngine;
 using System;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
+using UnityEngine.Events;
 
 /// <summary>
 /// Loads handdata.txt file and converts them to HandForm struct
@@ -15,7 +16,11 @@ public class HandLoader : MonoBehaviour
 {
     #region Properties
 
-    public string FileName = "handdata.json";
+
+    [HideInInspector]
+    public string ALPHABET;// new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'S', 'T', 'U', 'V', 'W', 'X', 'Y' };
+
+    private string FileName = "handdata.json";
 
     private List<HandForm> _LoadedHandForms;
     private bool _Loaded = false;
@@ -23,16 +28,23 @@ public class HandLoader : MonoBehaviour
 
     #endregion
 
-    #region UnityFunctions
-    private void Awake()
+
+    #region HandLoaderFunctions
+
+    /// <summary>
+    /// Loads the Data and saves it insinde of _LoadedHandForms
+    /// </summary>
+    /// <param name="afterLoaded">Gets Invoked after all the data was loaded (and converted)</param>
+    public void LoadData(UnityEvent afterLoaded)
     {
+        ALPHABET = "";
         _LoadedHandForms = new List<HandForm>();
-        FileName = Application.persistentDataPath + "/" + FileName;
-        
+        String FilePath = Application.persistentDataPath + "/" + FileName;
+
         _Loaded = false;
         try
         {
-            if (!File.Exists(FileName))
+            if (!File.Exists(FilePath))
             {
                 string tempPath = System.IO.Path.Combine(Application.streamingAssetsPath, FileName);
 
@@ -40,21 +52,17 @@ public class HandLoader : MonoBehaviour
                 WWW reader = new WWW(tempPath);
                 while (!reader.isDone) { }
 
-                System.IO.File.WriteAllBytes(FileName, reader.bytes);
+                System.IO.File.WriteAllBytes(FilePath, reader.bytes);
             }
-            LoadAllSavedHandForms(FileName);
+            LoadAllSavedHandForms(FilePath);
+            _Loaded = true;
+            afterLoaded.Invoke();
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Debug.Log(e.ToString());
         }
-
     }
-
-    #endregion
-
-    #region HandLoaderFunctions
-
 
     /// <summary>
     /// Gets the loaded HandForm object relative to the alphabetChar
@@ -63,7 +71,6 @@ public class HandLoader : MonoBehaviour
     /// <returns>HandForm object</returns>
     public HandForm GetHandForm(char alphabetChar)
     {
-        return _LoadedHandForms[0];
         foreach(HandForm hand in _LoadedHandForms)
         {
             if(hand.AlphabeticCharacter == alphabetChar)
@@ -84,6 +91,8 @@ public class HandLoader : MonoBehaviour
     }
 
 
+
+
     private void LoadAllSavedHandForms(string fileName)
     {
         Debug.Log("LoadAllSavedHandForms");
@@ -91,13 +100,10 @@ public class HandLoader : MonoBehaviour
         {
             // reads handata.json
             string json = r.ReadToEnd();
-            Debug.Log(json);
             List<SerializedHandForm> sHandForms = JsonConvert.DeserializeObject<List<SerializedHandForm>>(json);
-
+            Debug.Log("sHandforms count:" + sHandForms.Count);
             _LoadedHandForms = ConvertToHandForms(sHandForms);
-
         }
-        _Loaded = true;
 
     }
 
@@ -107,7 +113,17 @@ public class HandLoader : MonoBehaviour
     {
         List<HandForm> nHandForms = new List<HandForm>();
         foreach (SerializedHandForm sHandForm in sHandForms)
-            nHandForms.Add(ConvertToHandForm(sHandForm));
+        {
+            // only converts the handsigns from the set language
+            if (Array.IndexOf(sHandForm.languages, LanguageManager.language) > -1)
+            {
+                Debug.Log("AddLanguage");
+                ALPHABET += sHandForm.AlphabeticCharacter;
+                nHandForms.Add(ConvertToHandForm(sHandForm));
+            }
+
+        }
+
 
         return nHandForms;
     }
@@ -120,6 +136,7 @@ public class HandLoader : MonoBehaviour
         List<OVRBone> bindPoses = ConvertToBones(sHandForm.SavedBindPoses);
         float[] tipDistances    = sHandForm.SavedTipDistances;
         GameObject boneGo       = ConvertToTransform(sHandForm.BoneGO).gameObject;
+        Language[] langs     = sHandForm.languages;
 
         boneGo.name = alphabetChar + "-BoneGO";
         bones[0].Transform.parent = boneGo.transform;
@@ -142,7 +159,7 @@ public class HandLoader : MonoBehaviour
                             bindPoses,
                             tipDistances,
                             boneGo,
-                            null);
+                            langs);
     }
 
     private List<OVRBone> ConvertToBones(List<SerializedOVRBone> bones)

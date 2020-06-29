@@ -182,7 +182,7 @@ public class HandFormValidator : MonoBehaviour
     private float[] CompareTipDiff(HandForm savedTips, HandForm currentTips)
     {
         float[] tipDiff = new float[savedTips.SavedTipDistances.Length];
-        for (int i = 0; i < tipDiff.Length - 1; i++)
+        for (int i = 0; i < tipDiff.Length; i++)
         {
             tipDiff[i] = TipDistanceDiff(savedTips, currentTips, i);
 

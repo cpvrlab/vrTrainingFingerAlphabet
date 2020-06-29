@@ -121,6 +121,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &110571498 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2386477696160209269, guid: 09148a20c61669b43b7ffa8b9da4cd90,
+    type: 3}
+  m_PrefabInstance: {fileID: 844917015}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &158098509
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -463,8 +469,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentSkeleton: {fileID: 844917019}
-  HandAnchor: {fileID: 0}
-  CurrentHand: {fileID: 0}
+  HandAnchor: {fileID: 110571498}
+  CurrentHand: {fileID: 844917020}
   debug: {fileID: 453896187}
 --- !u!4 &754927296
 Transform:
@@ -474,7 +480,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 754927294}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.883, z: 0.40300012}
+  m_LocalPosition: {x: 0, y: 0.883, z: -0.093}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1899507778}
@@ -589,7 +595,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 844917017}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 54c16b381e28e8d479237771d234dbae, type: 3}
   m_Name: 
@@ -1497,6 +1503,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2986986689778806655, guid: fcd29aa0eaa57764c9cf1ceaddfacaa2,
         type: 3}
+      propertyPath: m_onVRUIButtonDown.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2986986689778806655, guid: fcd29aa0eaa57764c9cf1ceaddfacaa2,
+        type: 3}
       propertyPath: onVRUIButtonDown.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 754927295}
@@ -1510,6 +1521,41 @@ PrefabInstance:
       propertyPath: onVRUIButtonDown.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 2986986689778806655, guid: fcd29aa0eaa57764c9cf1ceaddfacaa2,
+        type: 3}
+      propertyPath: minPushToActivate
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2986986689778806655, guid: fcd29aa0eaa57764c9cf1ceaddfacaa2,
+        type: 3}
+      propertyPath: useGestureController
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2986986689778806655, guid: fcd29aa0eaa57764c9cf1ceaddfacaa2,
+        type: 3}
+      propertyPath: m_onVRUIButtonDown.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2986986689778806655, guid: fcd29aa0eaa57764c9cf1ceaddfacaa2,
+        type: 3}
+      propertyPath: m_onVRUIButtonDown.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2986986689778806655, guid: fcd29aa0eaa57764c9cf1ceaddfacaa2,
+        type: 3}
+      propertyPath: m_onVRUIButtonDown.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 754927295}
+    - target: {fileID: 2986986689778806655, guid: fcd29aa0eaa57764c9cf1ceaddfacaa2,
+        type: 3}
+      propertyPath: m_onVRUIButtonDown.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SaveHand
+      objectReference: {fileID: 0}
+    - target: {fileID: 2986986689778806655, guid: fcd29aa0eaa57764c9cf1ceaddfacaa2,
+        type: 3}
+      propertyPath: m_onVRUIButtonDown.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3114141377214954524, guid: fcd29aa0eaa57764c9cf1ceaddfacaa2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1518,12 +1564,12 @@ PrefabInstance:
     - target: {fileID: 3114141377214954524, guid: fcd29aa0eaa57764c9cf1ceaddfacaa2,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0
+      value: -0.000000007450581
       objectReference: {fileID: 0}
     - target: {fileID: 3114141377214954524, guid: fcd29aa0eaa57764c9cf1ceaddfacaa2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.059
+      value: -0.059000023
       objectReference: {fileID: 0}
     - target: {fileID: 3114141377214954524, guid: fcd29aa0eaa57764c9cf1ceaddfacaa2,
         type: 3}
@@ -1823,6 +1869,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VirtualHand
+      objectReference: {fileID: 0}
+    - target: {fileID: 249837025955261362, guid: 5aea1c789db8b8c4c8edb176c2339db9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 249837025955261363, guid: 5aea1c789db8b8c4c8edb176c2339db9,
         type: 3}

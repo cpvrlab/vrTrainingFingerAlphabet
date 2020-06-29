@@ -49,12 +49,9 @@ public class HandSaver : MonoBehaviour
         try
         {
             SerializedHandForm nHandForm = GenerateSerializableFromCurrentHandForm();
-
             
             string handFormJson = JsonConvert.SerializeObject(nHandForm);
-
-            debug.Log(handFormJson);
-
+            
             SaveJsonToFile(handFormJson);
 
         }
@@ -71,6 +68,7 @@ public class HandSaver : MonoBehaviour
     {
         _AlphabetId++;
         _CurrentAlphabetLetter = ALPHABET[_AlphabetId];
+        Debug.Log(_CurrentAlphabetLetter + "--------------");
     }
 
     #region GenerateHandForm
@@ -90,11 +88,13 @@ public class HandSaver : MonoBehaviour
         GameObject tempRootBone = GenerateRootBoneTransform();
 
 
+
         return new SerializedHandForm(_CurrentAlphabetLetter,
                                       tempBones,
                                       tempBindPoses,
                                       HandTipData.GetCurrentTipDistances(CurrentSkeleton),
-                                      tempRootBone);
+                                      tempRootBone,
+                                      new Language[] { Language.English });
     }
 
     private OVRBone CloneOVRBone(OVRBone b)
@@ -140,6 +140,7 @@ public class HandSaver : MonoBehaviour
             using (StreamWriter sw = f.CreateText())
             {
                 sw.Write(json);
+                debug.Log("Createt File");
             }
         }
         // add to existing textfile
@@ -148,6 +149,7 @@ public class HandSaver : MonoBehaviour
             using (StreamWriter sw = f.AppendText())
             {
                 sw.Write(json);
+                debug.Log("Added");
             }
         }
     }

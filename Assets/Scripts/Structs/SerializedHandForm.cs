@@ -18,16 +18,18 @@ public struct SerializedHandForm
     // NOTE: Create a GameObject
     public SerializedTransform BoneGO;
     public float[] SavedTipDistances;
+    public Language[] languages;
 
     #endregion
 
-    public SerializedHandForm(char alphabetChar, List<SerializedOVRBone> bones, List<SerializedOVRBone> bindPoses, float[] tipDistances, GameObject boneGO)
+    public SerializedHandForm(char alphabetChar, List<SerializedOVRBone> bones, List<SerializedOVRBone> bindPoses, float[] tipDistances, GameObject boneGO, Language[] lang)
     {
         AlphabeticCharacter = alphabetChar;
         SavedBones = bones;
         SavedBindPoses = bindPoses;
         SavedTipDistances = tipDistances;
         BoneGO = new SerializedTransform(boneGO.transform);
+        languages = lang;
     }
 
     public SerializedHandForm(HandForm handform)
@@ -37,6 +39,7 @@ public struct SerializedHandForm
         SavedBindPoses      = SerializeBoneList(handform.SavedBones);
         BoneGO              = new SerializedTransform(handform.BoneGO.transform);
         SavedTipDistances   = handform.SavedTipDistances;
+        languages           = handform.languages;
     }
 
     public override string ToString()

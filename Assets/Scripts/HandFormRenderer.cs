@@ -32,7 +32,6 @@ public class HandFormRenderer : MonoBehaviour
     private Material _SkeletonMaterial;
     private Material _DefaultMaterialMeshRenderer;
     private bool _Initalized = false;
-    private Transform _MainCameraRoot;
 
     #endregion
 
@@ -43,7 +42,6 @@ public class HandFormRenderer : MonoBehaviour
         _OVRMesh = GetComponent<OVRMesh>();
         _SkinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>();
         _DefaultMaterialMeshRenderer = _SkinnedMeshRenderer.material;
-        _MainCameraRoot = Camera.main.transform;
 
     }
 
@@ -225,13 +223,11 @@ public class HandFormRenderer : MonoBehaviour
 
     public void UpdateVirtualHandPosition(Transform handRoot)
     {
-
-
-
+        Debug.Log("UpdateVirtualHandPosition");
         if (!_Initalized)
             return;
 
-        handRoot.transform.position = _MainCameraRoot.position + OffsetToHead;
+        handRoot.transform.position = Camera.main.transform.position + OffsetToHead;
 
         foreach (BoneVisualization tipVisaul in _TipVisualization)
         {

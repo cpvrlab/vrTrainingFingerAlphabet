@@ -12,6 +12,8 @@ public class DisclamerManager : MonoBehaviour
     public GameObject[] DisclamerGameObjects;
     public GameObject[] SelectLanguage;
     public GameObject[] StandardGameObjects;
+
+    public VRUIToggleBehaviour ToggleButton;
     // Start is called before the first frame update
     void Awake()
     {
@@ -60,6 +62,7 @@ public class DisclamerManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("Language", languageId);
         LanguageManager.language = (Language)languageId;
+        ToggleButton.ToggleIsStuck = false;
     }
 
  

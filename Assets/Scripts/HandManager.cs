@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 /// <summary>
@@ -18,7 +19,7 @@ public class HandManager : MonoBehaviour
     public float SecondsUnitlCorrect = 1f;
 
     // All possible Alphabet letters
-    private static char[] ALPHABET = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'S', 'T', 'U', 'V', 'W', 'X', 'Y' };
+    // private static char[] ALPHABET = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'S', 'T', 'U', 'V', 'W', 'X', 'Y' };
    
     private char _CurrentLetter;
     private bool _HandFormsLoaded;
@@ -31,25 +32,22 @@ public class HandManager : MonoBehaviour
     #endregion
 
     #region UnityFunctions
-    private void Awake()
+    private void Start()
     {
         _HandFormsLoaded = false;
-        _CurrentLetter = GetRandomAlphabetLetter();
+        // _CurrentLetter = GetRandomAlphabetLetter();
         _Validator = GetComponent<HandFormValidator>();
         _Validator.VirtualHand = VirtualHand;
 
-        GetNewLetter();
-        StartCoroutine(AfterLoaded());
+        UnityEvent loadedEvent = new UnityEvent();
+        loadedEvent.AddListener(LoadNewHand);
+
+        HandData.LoadData(loadedEvent);
 
     }
 
     void Update()
     {
-
-        //if (_ObjectiveHandForm.BoneGO != null)
-        //    VirtualHand.UpdateVirtualHandPosition(_ObjectiveHandForm.BoneGO.transform);
-
-
         // Checks if Handforms are ready to be validated
         if (_HandFormsLoaded)
         {
@@ -79,32 +77,28 @@ public class HandManager : MonoBehaviour
     #region HandFormMangamentFunctions
 
     // TODO find other solution (callback for example)!
-    private IEnumerator AfterLoaded()
-    {
-        while (!HandData.IsDataLoaded())
-        {
-            yield return new WaitForSeconds(0.1f);
-        }
-        yield return new WaitForSeconds(0.1f);
-
-        LoadNewHand();
-        // _HandFormsLoaded = true;
-
-    }
 
     /// <summary>
     /// Loads a new random HandForm and updates the Alphabetscreen
     /// </summary>
     public void LoadNewHand()
     {
+        Debug.Log("loaded");
         char alphabetChar = GetNewLetter();
 
         _ObjectiveHandForm = HandData.GetHandForm(alphabetChar);
+        
+        Invoke("UpdateVirtualHandPos", 0.1f);
+        
+    }
 
+    private void UpdateVirtualHandPos()
+    {
+
+        Debug.Log("invoked");
         VirtualHand.DisplayHandForm(_ObjectiveHandForm);
-
         VirtualHand.UpdateVirtualHandPosition(_ObjectiveHandForm.BoneGO.transform);
-
+        _HandFormsLoaded = true;
     }
 
 
@@ -118,7 +112,8 @@ public class HandManager : MonoBehaviour
     /// <returns>A random letter from the array Alphabet</returns>
     private char GetRandomAlphabetLetter()
     {
-        return ALPHABET[Random.Range(0, ALPHABET.Length)];
+        Debug.Log(HandData.ALPHABET.Length);
+        return HandData.ALPHABET[Random.Range(0, HandData.ALPHABET.Length)];
     }
 
     /// <summary>
@@ -136,6 +131,11 @@ public class HandManager : MonoBehaviour
         CurrentLetterText.text = _CurrentLetter.ToString();
 
         return _CurrentLetter;
+    }
+
+    private void GenerateAlphabet()
+    {
+
     }
     #endregion
 

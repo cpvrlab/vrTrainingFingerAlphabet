@@ -332,7 +332,7 @@ PrefabInstance:
         type: 3}
       propertyPath: CurrentUserHand
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1142331954}
     - target: {fileID: 6663558989223508450, guid: f7b900df829fa4044ba6770eb29a4d2f,
         type: 3}
       propertyPath: VirtualHand
@@ -391,7 +391,7 @@ PrefabInstance:
     - target: {fileID: 6663558989223508451, guid: f7b900df829fa4044ba6770eb29a4d2f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6663558989223508451, guid: f7b900df829fa4044ba6770eb29a4d2f,
         type: 3}
@@ -432,6 +432,11 @@ PrefabInstance:
         type: 3}
       propertyPath: SecondsUnitlCorrect
       value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6663558989223508452, guid: f7b900df829fa4044ba6770eb29a4d2f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6663558989223508453, guid: f7b900df829fa4044ba6770eb29a4d2f,
         type: 3}
@@ -1023,6 +1028,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1265040629}
     m_Modifications:
+    - target: {fileID: 2376093626414727732, guid: 09148a20c61669b43b7ffa8b9da4cd90,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: dc5ad5a24f50f514782349338cc7caa9, type: 2}
+    - target: {fileID: 2376136860151823482, guid: 09148a20c61669b43b7ffa8b9da4cd90,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: dc5ad5a24f50f514782349338cc7caa9, type: 2}
     - target: {fileID: 2386477697284580208, guid: 09148a20c61669b43b7ffa8b9da4cd90,
         type: 3}
       propertyPath: m_Name
@@ -1135,6 +1150,18 @@ MonoBehaviour:
   _updateRootPose: 0
   _updateRootScale: 0
   _enablePhysicsCapsules: 0
+--- !u!114 &1142331954 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2344227884377302006, guid: 09148a20c61669b43b7ffa8b9da4cd90,
+    type: 3}
+  m_PrefabInstance: {fileID: 1142331948}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1142331950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb7623a8f0b49cf4dbaa40aea4d4be64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1177820715 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6663558989223508452, guid: f7b900df829fa4044ba6770eb29a4d2f,
@@ -1181,10 +1208,10 @@ Transform:
   - {fileID: 1436547354}
   - {fileID: 1470922765}
   - {fileID: 1142331949}
+  - {fileID: 155738194}
   - {fileID: 1958347477}
   - {fileID: 1366434972}
   - {fileID: 767562352}
-  - {fileID: 155738194}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1680,6 +1707,11 @@ PrefabInstance:
       propertyPath: debug
       value: 
       objectReference: {fileID: 767562351}
+    - target: {fileID: 2553577917670391322, guid: 669fa60469cc1644994492d624d8f7d0,
+        type: 3}
+      propertyPath: FileName
+      value: handdata.json
+      objectReference: {fileID: 0}
     - target: {fileID: 2553577917670391323, guid: 669fa60469cc1644994492d624d8f7d0,
         type: 3}
       propertyPath: m_LocalPosition.x
