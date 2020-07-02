@@ -12,7 +12,9 @@ public class HandFormValidator : MonoBehaviour
 {
     #region Properties
     public DebugCanvas DebugCanvas;
-    public OVRHand CurrentUserHand;
+
+    public OVRHand CurrentLeftHand;
+    public OVRHand CurrentRightHand;
     public HandFormRenderer VirtualHand;
 
     public float MaxAngleDiff = 20.0f;
@@ -49,6 +51,7 @@ public class HandFormValidator : MonoBehaviour
     // All Intermediate- and Distalbone ids
     private static int[][] FingerIds = { ThumbIds, IndexIds, MiddleIds, RingIds, PinkyIds };
 
+    private OVRHand _CurrentUserHand;
     private OVRSkeleton _CurrentSkeleton;
     private GameObject _CurrentGO;
     private string _TrimString = "Hand_";
@@ -60,8 +63,18 @@ public class HandFormValidator : MonoBehaviour
 
     private void Awake()
     {
-        _CurrentSkeleton = CurrentUserHand.gameObject.GetComponent<OVRSkeleton>();
-        _CurrentGO = CurrentUserHand.transform.parent.gameObject;
+        // set current Hand
+        if(HandednessManager.ActiveHandedness == 0)
+        {
+            _CurrentUserHand = CurrentLeftHand;
+        }
+        else
+        {
+            _CurrentUserHand = CurrentRightHand;
+        }
+
+        _CurrentSkeleton = _CurrentUserHand.gameObject.GetComponent<OVRSkeleton>();
+        _CurrentGO = _CurrentUserHand.transform.parent.gameObject;
         
     }
 
@@ -120,7 +133,7 @@ public class HandFormValidator : MonoBehaviour
 
     private bool CanCompare(HandForm handForm)
     {
-        return handForm.BoneGO != null && CurrentUserHand.IsTracked;
+        return handForm.BoneGO != null && _CurrentUserHand.IsTracked;
     }
 
 

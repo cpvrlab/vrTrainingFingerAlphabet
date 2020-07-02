@@ -16,6 +16,10 @@ public struct LanguageTags
     public string[] START_TEST;
     public string[] START_SETTINGS;
 
+    public string[] HANDEDNESS_TITLE;
+    public string[] HANDEDNESS_LEFT;
+    public string[] HANDEDNESS_RIGHT;
+
     #endregion
     #region LearnAndTestScene
 
@@ -27,6 +31,8 @@ public struct LanguageTags
     public string[] DEBUG_LETTERTITLE;
 
     #endregion
+
+
 
     #endregion
 

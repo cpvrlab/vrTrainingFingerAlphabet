@@ -13,6 +13,7 @@ public struct HandForm
 
     public char AlphabeticCharacter;
     public Language[] languages;
+    public OVRHand.Hand handedness;
     public IList<OVRBone> SavedBones;
     public IList<OVRBone> SavedBindPoses;
     public GameObject BoneGO;
@@ -36,6 +37,7 @@ public struct HandForm
         SavedTipDistances = tipDistances;
         BoneGO = boneGO;
         languages = null;
+        handedness = 0;
     }
 
 
@@ -49,7 +51,13 @@ public struct HandForm
     /// <param name="tipDistances">float array with the distances between the tipbones</param>
     /// <param name="boneGO">The root of the hand</param>
     /// <param name="lang">Languages in wich they use this Handform for the Letter</param>
-    public HandForm(char alphabetChar, List<OVRBone> bones, List<OVRBone> bindPoses, float[] tipDistances, GameObject boneGO, Language[] lang)
+    public HandForm(char alphabetChar, 
+                    List<OVRBone> bones, 
+                    List<OVRBone> bindPoses, 
+                    float[] tipDistances, 
+                    GameObject boneGO, 
+                    Language[] lang,
+                    OVRHand.Hand hand)
     {
         AlphabeticCharacter = alphabetChar;
         SavedBones = bones;
@@ -57,6 +65,7 @@ public struct HandForm
         SavedTipDistances = tipDistances;
         BoneGO = boneGO;
         languages = lang;
+        handedness = hand;
     }
 
 
@@ -74,9 +83,10 @@ public struct HandForm
                     AlphabeticCharacter.ToString() + "\n" +
                     "Bones Length: " + SavedBones.Count + "\n" +
                     "BindPoses Length: " + SavedBindPoses.Count + "\n" +
-                    "BoneGo"            + BoneGO + "\n" +
-                    "tipDistances Length: " + SavedTipDistances.Length
-
+                    "BoneGo" + BoneGO + "\n" +
+                    "TipDistances Length: " + SavedTipDistances.Length + "\n" +
+                    "Languages: " + languages.Length + "\n" +
+                    "Handedness: " + System.Enum.GetName(typeof(OVRHand.Hand), handedness)
 
                 );
     }

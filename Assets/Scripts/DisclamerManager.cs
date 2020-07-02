@@ -12,6 +12,7 @@ public class DisclamerManager : MonoBehaviour
     public GameObject[] DisclamerGameObjects;
     public GameObject[] SelectLanguage;
     public GameObject[] StandardGameObjects;
+    public GameObject[] HandednessGameObjects;
 
     public VRUIToggleBehaviour ToggleButton;
     // Start is called before the first frame update
@@ -20,11 +21,15 @@ public class DisclamerManager : MonoBehaviour
         Debug.Log("Awake");
         LanguageManager.Init();
 
+        PlayerPrefs.SetInt("Language", -1);
+
         if (PlayerPrefs.GetInt("Language", -1) == -1)
         {
+            // show Languages
             foreach (GameObject language in SelectLanguage)
                 language.SetActive(true);
 
+            // hide Startmenu
             foreach (GameObject standard in StandardGameObjects)
                 standard.SetActive(false);
         }
@@ -38,22 +43,37 @@ public class DisclamerManager : MonoBehaviour
 
     public void ShowDisclamer()
     {
-
-            foreach (GameObject language in SelectLanguage)
+        // hide Languages
+        foreach (GameObject language in SelectLanguage)
             language.SetActive(false);
 
-            foreach (GameObject standard in StandardGameObjects)
+        // hide Startmenu
+        foreach (GameObject standard in StandardGameObjects)
             standard.SetActive(false);
 
-            foreach (GameObject disclamer in DisclamerGameObjects)
-                disclamer.SetActive(true);
+        // show Disclamer
+        foreach (GameObject disclamer in DisclamerGameObjects)
+            disclamer.SetActive(true);
+    }
+
+    public void ShowHandedness()
+    {
+        // hide Disclamer
+        foreach (GameObject disclamer in DisclamerGameObjects)
+            disclamer.SetActive(false);
+
+        // show Handeness
+        foreach(GameObject handednessGO in HandednessGameObjects)
+            handednessGO.SetActive(true);
     }
 
     public void ShowStartMenu()
     {
-        foreach (GameObject disclamer in DisclamerGameObjects)
-            disclamer.SetActive(false);
+        // hide Handeness
+        foreach (GameObject handednessGO in HandednessGameObjects)
+            handednessGO.SetActive(false);
 
+        // show Startmenu
         foreach (GameObject standard in StandardGameObjects)
             standard.SetActive(true);
     }
@@ -64,6 +84,13 @@ public class DisclamerManager : MonoBehaviour
         LanguageManager.language = (Language)languageId;
         ToggleButton.ToggleIsStuck = false;
     }
+
+    public void SetHandedness(int handednessId)
+    {
+        PlayerPrefs.SetInt("Handedness", handednessId);
+        HandednessManager.SetHandedness(handednessId);
+    }
+
 
  
 }

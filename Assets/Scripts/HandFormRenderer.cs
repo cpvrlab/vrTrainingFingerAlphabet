@@ -28,7 +28,7 @@ public class HandFormRenderer : MonoBehaviour
     private GameObject _SkeletonGO;
     private float _Scale = 1f;
     private SkinnedMeshRenderer _SkinnedMeshRenderer;
-    private OVRMesh _OVRMesh;
+    private OVRMesh[] _OVRMeshs;
     private Material _SkeletonMaterial;
     private Material _DefaultMaterialMeshRenderer;
     private bool _Initalized = false;
@@ -39,10 +39,11 @@ public class HandFormRenderer : MonoBehaviour
 
     void Start()
     {
-        _OVRMesh = GetComponent<OVRMesh>();
+        _OVRMeshs = GetComponents<OVRMesh>();
         _SkinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>();
         _DefaultMaterialMeshRenderer = _SkinnedMeshRenderer.material;
-
+        if ((int)HandednessManager.ActiveHandedness == 1)
+            OffsetToHead.x = -(OffsetToHead.x);
     }
 
     #endregion
@@ -72,7 +73,7 @@ public class HandFormRenderer : MonoBehaviour
 
         _Initalized = true;
 
-        if (_OVRMesh == null)
+        if (_OVRMeshs[(int)HandednessManager.ActiveHandedness] == null)
             return;
         // Mesh
         ShowSkinnedMeshRenderer(savedHand);
@@ -200,8 +201,9 @@ public class HandFormRenderer : MonoBehaviour
     /// <param name="savedBindPoses">bindposes that will be set to the skinned meshrenderer</param>
     private void InitializeMeshRenderer(HandForm savedHand)
     {
-        
-        _SkinnedMeshRenderer.sharedMesh = _OVRMesh.Mesh;
+        int handId = (int)HandednessManager.ActiveHandedness;
+        _SkinnedMeshRenderer.sharedMesh = _OVRMeshs[handId].Mesh;
+
         int numSkinnableBones = (int)OVRSkeleton.BoneId.Hand_MaxSkinnable;
         var bindPoses = new Matrix4x4[numSkinnableBones];
         var bones = new Transform[numSkinnableBones];
@@ -211,7 +213,7 @@ public class HandFormRenderer : MonoBehaviour
             bones[i] = savedHand.SavedBones[i].Transform;
             bindPoses[i] = savedHand.SavedBindPoses[i].Transform.worldToLocalMatrix * localToWorldMatrix;
         }
-        _OVRMesh.Mesh.bindposes = bindPoses;
+        _OVRMeshs[handId].Mesh.bindposes = bindPoses;
         _SkinnedMeshRenderer.bones = bones;
         _SkinnedMeshRenderer.updateWhenOffscreen = true;
     }

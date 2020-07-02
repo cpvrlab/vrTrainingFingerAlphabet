@@ -5,7 +5,7 @@
     "fr",
     "nl"
   ],
-  "DISCLAMER_TITLE":  [
+  "DISCLAMER_TITLE": [
     "Disclamer",
     "Hinweis",
     "Avertissement",
@@ -13,59 +13,77 @@
   ],
   "DISCLAMER_TEXT": [
     "Don’t try to force your hand into a Handpose! \n Press the skip button instead. The application is not perfect for every hand type. The letters J, R and Z are not implemented, because they contain movements or need to cross fingers. The Letter M and N are a littel bit diffrent for tracking reasons. Some hand shapes are also oriented to the back, hand shapes are usually always to be pointed outwards. \n Press the gray button to continue...",
-      
+
     "Krampfen Sie nich Ihre Hand in eine Handpose! \n Drücken Sie besser den Überspring button, die Applikation ist nicht prefekt. \n Die Buchstaben J, R und Z konnten nicht implementiert werden, da diese Bewegungen oder fingerkreuzngen beinhalten. Manche Handformen sind auch rückseitig orientiert, Handformen sind in der Regel immer gegen aussen zu zeigen.  \n Drücken Sie den Grauen button um fortzusetzen...",
-      
+
     "Ne forcer pas votre main dans une position inconfortable ! Je vous conseille à la place d'appuyer sur le bouton ignorer. L'application n'est pas encore parfaite pour toutes les types de main. Les lettres J, P, R, T et Z n'ont pas pu être appliquées car elles impliquent des mouvements ou des croisements de doigts. Certaines formes de main sont orientées vers le dos, les formes de main doivent généralement toujours être pointées vers l'extérieur. Appuyez sur le bouton gris pour continuer.",
-      
+
     "Probeer je hand niet te forceren in een Handpose! \n Druk in plaats daarvan op de skip-knop. De toepassing is niet perfect voor elk type hand. \n De letters F, J, R, X en Z zijn niet geimplementeerd, omdat ze bewegingen bevatten of vingers moeten kruisen. Sommige handvormen zijn ook op de rug georiënteerd, de handvormen zijn meestal altijd naar buiten gericht. \n Druk op de grijze knop om verder te gaan..."
   ],
-  "START_TITEL":  [
+  "START_TITEL": [
     "VR-Trainingsapplication for \n ASL Fingeralphabet",
     "VR-Trainingsapplikation für \n das Deutsches Fingeralphabet",
     "VR-Application d'entrainement pour l'alphabet des signes en langue françaises.",
     "VR-trainingsapplicatie voor het Vlaamse Vingeralfabet"
   ],
-  "START_LEARN":  [
+  "START_LEARN": [
     "Learn",
     "Lernen",
     "Apprendre",
     "Leren"
   ],
-  "START_TEST":  [
+  "START_TEST": [
     "Test",
     "Prüfen",
     "Tester",
     "Testen"
   ],
-  "START_SETTINGS":  [
+  "START_SETTINGS": [
     "Settings",
     "Einstellungen",
     "Paramètres",
     "Instellingen"
   ],
-  "ALPHABET_TEXT":  [
+  "ALPHABET_TEXT": [
     "The current asked \n Letter is:",
     "Der aktuell gefragte \n Buchstabe ist:",
     "La lettre actuellement \n demandée est:",
     "De brief die op dit moment \n wordt gevraagd is:"
   ],
-  "CONTROLPANEL_SKIP":  [
+  "CONTROLPANEL_SKIP": [
     "Skip",
     "Überspringen",
     "Ignorer",
     "Overslaan"
   ],
-  "CONTROLPANEL_EXIT":  [
+  "CONTROLPANEL_EXIT": [
     "Exit",
     "Beenden",
     "Terminer",
     "Exit"
   ],
-  "DEBUG_LETTERTITLE":  [
+  "DEBUG_LETTERTITLE": [
     "Letter",
     "Buchstabe",
     "Caractère",
     "Brief"
+  ],
+  "HANDEDNESS_TITLE": [
+    "Set Handedness",
+    "Handlichkeit festlegen",
+    "Déterminer la maniabilité",
+    "Set Handigheid"
+  ],
+  "HANDEDNESS_LEFT": [
+    "Left \n Handed",
+    "Linkshänder",
+    "Gaucher",
+    "Linkshandig"
+  ],
+  "HANDEDNESS_RIGHT": [
+    "Right Handed",
+    "Rechtshänder",
+    "Droitier",
+    "Rechtshandig"
   ]
 }

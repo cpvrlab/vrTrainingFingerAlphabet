@@ -40,7 +40,7 @@ public class HandManager : MonoBehaviour
         _Validator.VirtualHand = VirtualHand;
 
         UnityEvent loadedEvent = new UnityEvent();
-        loadedEvent.AddListener(LoadNewHand);
+        loadedEvent.AddListener(LoadFirstHand);
 
         HandData.LoadData(loadedEvent);
 
@@ -51,7 +51,6 @@ public class HandManager : MonoBehaviour
         // Checks if Handforms are ready to be validated
         if (_HandFormsLoaded)
         {
-            // Set VirtualHandPosition
 
 
             // Update _CurrentTime
@@ -81,14 +80,24 @@ public class HandManager : MonoBehaviour
     /// <summary>
     /// Loads a new random HandForm and updates the Alphabetscreen
     /// </summary>
+    /// 
     public void LoadNewHand()
     {
         Debug.Log("loaded");
         char alphabetChar = GetNewLetter();
 
         _ObjectiveHandForm = HandData.GetHandForm(alphabetChar);
-        
-        Invoke("UpdateVirtualHandPos", 0.1f);
+        UpdateVirtualHandPos();
+    }
+
+    public void LoadFirstHand()
+    {
+        Debug.Log("loaded");
+        char alphabetChar = GetNewLetter();
+
+        _ObjectiveHandForm = HandData.GetHandForm(alphabetChar);
+
+        Invoke("UpdateVirtualHandPos", 0.2f);
         
     }
 

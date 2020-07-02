@@ -18,8 +18,10 @@ public class HandSaver : MonoBehaviour
     public OVRSkeleton CurrentSkeleton;
     public Transform HandAnchor;
     public OVRHand CurrentHand;
-
     public DebugCanvas debug;
+
+    [SerializeField]
+    private OVRHand.Hand HandType = OVRHand.Hand.None;
 
     // All possible Alphabet letters
     private static char[] ALPHABET = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'S', 'T', 'U', 'V', 'W', 'X', 'Y' };
@@ -36,6 +38,7 @@ public class HandSaver : MonoBehaviour
     {
         _AlphabetId = 0;
         _CurrentAlphabetLetter = ALPHABET[_AlphabetId];
+        debug.Log(_CurrentAlphabetLetter + "-----");
     }
     #endregion
 
@@ -68,7 +71,7 @@ public class HandSaver : MonoBehaviour
     {
         _AlphabetId++;
         _CurrentAlphabetLetter = ALPHABET[_AlphabetId];
-        Debug.Log(_CurrentAlphabetLetter + "--------------");
+        debug.Log(_CurrentAlphabetLetter + "--------------");
     }
 
     #region GenerateHandForm
@@ -94,7 +97,8 @@ public class HandSaver : MonoBehaviour
                                       tempBindPoses,
                                       HandTipData.GetCurrentTipDistances(CurrentSkeleton),
                                       tempRootBone,
-                                      new Language[] { Language.English });
+                                      new Language[] { Language.German },
+                                      HandType);
     }
 
     private OVRBone CloneOVRBone(OVRBone b)

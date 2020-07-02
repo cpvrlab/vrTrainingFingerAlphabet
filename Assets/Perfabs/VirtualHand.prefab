@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 249837025955261262}
   - component: {fileID: 249837025955261261}
+  - component: {fileID: 2232433771830029202}
   - component: {fileID: 249837025955261260}
   - component: {fileID: 249837025955261363}
   m_Layer: 0
@@ -46,6 +47,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _meshType: 0
+--- !u!114 &2232433771830029202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249837025955261362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cc5c234723e3a54d8dd09b131117743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _meshType: 1
 --- !u!137 &249837025955261260
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -109,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 695e82fe0bf53ac48a1d74cacf967593, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ActiveMeshMaterial: {fileID: 0}
   ActiveMaterial: {fileID: 2100000, guid: d8dc3bfe8526f674b80fae9aff64b000, type: 2}
   WrongMaterial: {fileID: 2100000, guid: ec2f7c738b3c12f47830ce41db62bbea, type: 2}
-  debug: {fileID: 0}
-  HeadHeight: {fileID: 0}
+  OffsetToHead: {x: -0.15, y: -0.35, z: 0.4}

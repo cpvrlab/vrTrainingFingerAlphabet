@@ -29,6 +29,7 @@ public class HandLoader : MonoBehaviour
     #endregion
 
 
+
     #region HandLoaderFunctions
 
     /// <summary>
@@ -101,7 +102,6 @@ public class HandLoader : MonoBehaviour
             // reads handata.json
             string json = r.ReadToEnd();
             List<SerializedHandForm> sHandForms = JsonConvert.DeserializeObject<List<SerializedHandForm>>(json);
-            Debug.Log("sHandforms count:" + sHandForms.Count);
             _LoadedHandForms = ConvertToHandForms(sHandForms);
         }
 
@@ -111,16 +111,23 @@ public class HandLoader : MonoBehaviour
 
     private List<HandForm> ConvertToHandForms(List<SerializedHandForm> sHandForms)
     {
+        Debug.Log(HandednessManager.ActiveHandedness);
+        Debug.Log(LanguageManager.language);
+
         List<HandForm> nHandForms = new List<HandForm>();
         foreach (SerializedHandForm sHandForm in sHandForms)
         {
-            // only converts the handsigns from the set language
-            if (Array.IndexOf(sHandForm.languages, LanguageManager.language) > -1)
+            // only converts handsigns from the handedness
+            if(HandednessManager.ActiveHandedness == sHandForm.handedness)
             {
-                Debug.Log("AddLanguage");
-                ALPHABET += sHandForm.AlphabeticCharacter;
-                nHandForms.Add(ConvertToHandForm(sHandForm));
+                // only converts handsigns from the set language
+                if (Array.IndexOf(sHandForm.languages, LanguageManager.language) > -1)
+                {
+                    ALPHABET += sHandForm.AlphabeticCharacter;
+                    nHandForms.Add(ConvertToHandForm(sHandForm));
+                }
             }
+
 
         }
 
@@ -136,7 +143,8 @@ public class HandLoader : MonoBehaviour
         List<OVRBone> bindPoses = ConvertToBones(sHandForm.SavedBindPoses);
         float[] tipDistances    = sHandForm.SavedTipDistances;
         GameObject boneGo       = ConvertToTransform(sHandForm.BoneGO).gameObject;
-        Language[] langs     = sHandForm.languages;
+        Language[] langs        = sHandForm.languages;
+        OVRHand.Hand handedness   = sHandForm.handedness;
 
         boneGo.name = alphabetChar + "-BoneGO";
         bones[0].Transform.parent = boneGo.transform;
@@ -159,7 +167,8 @@ public class HandLoader : MonoBehaviour
                             bindPoses,
                             tipDistances,
                             boneGo,
-                            langs);
+                            langs,
+                            handedness);
     }
 
     private List<OVRBone> ConvertToBones(List<SerializedOVRBone> bones)
@@ -210,7 +219,7 @@ public class HandLoader : MonoBehaviour
             bindPoses[i].Transform.parent = GetParentBindPoses(i, bindPoses);
         }
 
-        return new HandForm(alphabetChar, bones, bindPoses, tipDistances, transformGO.gameObject,null);
+        return new HandForm(alphabetChar, bones, bindPoses, tipDistances, transformGO.gameObject,null, 0);
     }
 
     private List<OVRBone> StringToBoneList(string boneListString)

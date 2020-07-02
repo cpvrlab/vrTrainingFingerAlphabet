@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// struct wich saves all important information to display and compare a Hand
@@ -19,10 +20,17 @@ public struct SerializedHandForm
     public SerializedTransform BoneGO;
     public float[] SavedTipDistances;
     public Language[] languages;
+    public OVRHand.Hand handedness;
 
     #endregion
 
-    public SerializedHandForm(char alphabetChar, List<SerializedOVRBone> bones, List<SerializedOVRBone> bindPoses, float[] tipDistances, GameObject boneGO, Language[] lang)
+    public SerializedHandForm(char alphabetChar, 
+                              List<SerializedOVRBone> bones, 
+                              List<SerializedOVRBone> bindPoses, 
+                              float[] tipDistances, 
+                              GameObject boneGO, 
+                              Language[] lang,
+                              OVRHand.Hand hand)
     {
         AlphabeticCharacter = alphabetChar;
         SavedBones = bones;
@@ -30,6 +38,7 @@ public struct SerializedHandForm
         SavedTipDistances = tipDistances;
         BoneGO = new SerializedTransform(boneGO.transform);
         languages = lang;
+        handedness = hand;
     }
 
     public SerializedHandForm(HandForm handform)
@@ -40,6 +49,7 @@ public struct SerializedHandForm
         BoneGO              = new SerializedTransform(handform.BoneGO.transform);
         SavedTipDistances   = handform.SavedTipDistances;
         languages           = handform.languages;
+        handedness          = handform.handedness;
     }
 
     public override string ToString()
@@ -48,9 +58,9 @@ public struct SerializedHandForm
                     AlphabeticCharacter.ToString() + "\n" +
                     "Bones Length: " + SavedBones.Count + "\n" +
                     "BindPoses Length: " + SavedBindPoses.Count + "\n" +
-                    "BoneGo" + BoneGO + "\n" +
-                    "tipDistances Length: " + SavedTipDistances.Length
-
+                    "BoneGo: " + BoneGO + "\n" +
+                    "tipDistances Length: " + SavedTipDistances.Length + "\n" +
+                    "Handedness: " + Enum.GetName(typeof(OVRHand.Hand), handedness)
 
                 );
     }
