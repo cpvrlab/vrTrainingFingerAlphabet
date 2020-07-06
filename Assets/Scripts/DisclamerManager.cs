@@ -21,7 +21,7 @@ public class DisclamerManager : MonoBehaviour
         Debug.Log("Awake");
         LanguageManager.Init();
 
-        PlayerPrefs.SetInt("Language", -1);
+        // PlayerPrefs.SetInt("Language", -1);
 
         if (PlayerPrefs.GetInt("Language", -1) == -1)
         {

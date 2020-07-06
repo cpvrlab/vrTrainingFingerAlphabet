@@ -19,6 +19,7 @@ public class HandManager : MonoBehaviour
     public float SecondsUnitlCorrect = 1f;
     public bool TestMode = false;
 
+
     // All possible Alphabet letters
     // private static char[] ALPHABET = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'S', 'T', 'U', 'V', 'W', 'X', 'Y' };
    
@@ -87,9 +88,12 @@ public class HandManager : MonoBehaviour
     {
         Debug.Log("loaded");
         char alphabetChar = LearnManger.GetLetterMode(TestMode);
+        CurrentLetterText.text = alphabetChar.ToString();
 
         _ObjectiveHandForm = HandData.GetHandForm(alphabetChar);
         UpdateVirtualHandPos();
+
+
     }
 
     public void LoadFirstHand()
@@ -101,6 +105,7 @@ public class HandManager : MonoBehaviour
             LearnManger.Init(HandData.ALPHABET.ToCharArray());
 
         char alphabetChar = LearnManger.GetLetterMode(TestMode);
+        CurrentLetterText.text = alphabetChar.ToString();
 
         _ObjectiveHandForm = HandData.GetHandForm(alphabetChar);
 

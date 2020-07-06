@@ -11,12 +11,14 @@ public static class LearnManger
     private static List<char> _LearnedLetters = new List<char>();
     private static List<char> _MasterdLetters = new List<char>();
 
-    private static List<char>[] _AllLetters = { _NewLetters, _LearnedLetters, _MasterdLetters };
+    public static List<char>[] _AllLetters = { _NewLetters, _LearnedLetters, _MasterdLetters };
 
     private static int[] _LearnOrder = { 0, 1, 2 };
     private static int[] _TestOrder = { 1, 2, 0 };
 
     public static bool IsInitalized = false;
+
+    private static char _CurrentLetter;
 
     public static void Init(char[] alphabet)
     {
@@ -34,12 +36,13 @@ public static class LearnManger
     {
         if(TestMode)
         {
-            return GetLetter(_TestOrder);
+            _CurrentLetter = GetLetter(_TestOrder);
         }
         else
         {
-            return GetLetter(_LearnOrder);
+            _CurrentLetter = GetLetter(_LearnOrder);
         }
+        return _CurrentLetter;
 
     }
 
@@ -56,7 +59,7 @@ public static class LearnManger
             }
         }
 
-        return 'A';
+        return GetLetter(order);
     }
 
     private static bool GetRndLetterFromList(List<char> list, out char t)
@@ -65,7 +68,8 @@ public static class LearnManger
         if (list.Count > 0)
         {
             t = list[Random.Range(0, list.Count)];
-            return true;
+            return _CurrentLetter != t;
+
         }
         return false;
     }
