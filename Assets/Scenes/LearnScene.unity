@@ -38,13 +38,13 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.75595224, g: 0.771487, b: 0.7715259, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 1
+  m_GIWorkflowMode: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1390,27 +1390,32 @@ PrefabInstance:
     - target: {fileID: 1493674551359408994, guid: 8c47f18dc2164da4b9e6b1441c79f65a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.25
+      value: -0.25000003
       objectReference: {fileID: 0}
     - target: {fileID: 1493674551359408994, guid: 8c47f18dc2164da4b9e6b1441c79f65a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.000000022351742
       objectReference: {fileID: 0}
     - target: {fileID: 1493674551359408994, guid: 8c47f18dc2164da4b9e6b1441c79f65a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.099999994
+      value: -0.09999999
       objectReference: {fileID: 0}
     - target: {fileID: 1493674552539359945, guid: 8c47f18dc2164da4b9e6b1441c79f65a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.000000014901161
       objectReference: {fileID: 0}
     - target: {fileID: 1493674552539359945, guid: 8c47f18dc2164da4b9e6b1441c79f65a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.099999964
+      value: -0.09999997
+      objectReference: {fileID: 0}
+    - target: {fileID: 1493674552539359945, guid: 8c47f18dc2164da4b9e6b1441c79f65a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.21450695
       objectReference: {fileID: 0}
     - target: {fileID: 1656997642486282666, guid: 8c47f18dc2164da4b9e6b1441c79f65a,
         type: 3}
