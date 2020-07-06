@@ -17,6 +17,7 @@ public class HandManager : MonoBehaviour
     public HandLoader HandData;
     public HandFormRenderer VirtualHand;
     public float SecondsUnitlCorrect = 1f;
+    public bool TestMode = false;
 
     // All possible Alphabet letters
     // private static char[] ALPHABET = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'S', 'T', 'U', 'V', 'W', 'X', 'Y' };
@@ -65,6 +66,7 @@ public class HandManager : MonoBehaviour
             // When the HandForm was right for the SecondsUnitlCorrect 
             if(_CurrentTime - _PreviousFalseTime > SecondsUnitlCorrect)
             {
+                LearnManger.IncreaseLetterScore(_ObjectiveHandForm.AlphabeticCharacter, TestMode);
                 LoadNewHand();
                 _PreviousFalseTime = _CurrentTime;
             }
@@ -84,7 +86,7 @@ public class HandManager : MonoBehaviour
     public void LoadNewHand()
     {
         Debug.Log("loaded");
-        char alphabetChar = GetNewLetter();
+        char alphabetChar = LearnManger.GetLetterMode(TestMode);
 
         _ObjectiveHandForm = HandData.GetHandForm(alphabetChar);
         UpdateVirtualHandPos();
@@ -93,7 +95,12 @@ public class HandManager : MonoBehaviour
     public void LoadFirstHand()
     {
         Debug.Log("loaded");
-        char alphabetChar = GetNewLetter();
+
+        // TODO reset when language changed
+        if(!LearnManger.IsInitalized)
+            LearnManger.Init(HandData.ALPHABET.ToCharArray());
+
+        char alphabetChar = LearnManger.GetLetterMode(TestMode);
 
         _ObjectiveHandForm = HandData.GetHandForm(alphabetChar);
 

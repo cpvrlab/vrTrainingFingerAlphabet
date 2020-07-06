@@ -83,6 +83,9 @@ public class DisclamerManager : MonoBehaviour
         PlayerPrefs.SetInt("Language", languageId);
         LanguageManager.language = (Language)languageId;
         ToggleButton.ToggleIsStuck = false;
+
+        LearnManger.IsInitalized = false;
+
     }
 
     public void SetHandedness(int handednessId)

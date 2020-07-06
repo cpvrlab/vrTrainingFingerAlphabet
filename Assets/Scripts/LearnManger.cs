@@ -2,209 +2,100 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum LearningState
-{
-    New = 0,
-    Learned = 1,
-    Masterd = 2
-}
-public struct LetterState
-{
-    public char Letter;
-    public LearningState LearnState;
-    public int SkippedAmount;
 
-    public LetterState(char letter, LearningState state)
-    {
-        Letter = letter;
-        LearnState = state;
-        SkippedAmount = 0;
-    }
-}
-
-// TODO, Test, and make scene more nice!
-// TODO this is trash
 public static class LearnManger
 {
+    // private static List<char> _AllLetters = new List<char>();
 
-    public static char[] AllLetters;
-    public static int AmountOfSkip;
+    private static List<char> _NewLetters = new List<char>();
+    private static List<char> _LearnedLetters = new List<char>();
+    private static List<char> _MasterdLetters = new List<char>();
 
-    // TODO make that you can spell words?
+    private static List<char>[] _AllLetters = { _NewLetters, _LearnedLetters, _MasterdLetters };
 
-    private static LetterState[] _LetterStates;
-    private static int _NewLetterAmount;
-    private static int _LearndLetterAmount;
-    private static int _MasterdLetterAmount;
-    private static LearningState _CurrentLearnState;
-    public static LetterState _CurrentLetter;
+    private static int[] _LearnOrder = { 0, 1, 2 };
+    private static int[] _TestOrder = { 1, 2, 0 };
 
-    public static void Init()
+    public static bool IsInitalized = false;
+
+    public static void Init(char[] alphabet)
     {
-        _LetterStates = new LetterState[AllLetters.Length];
-        for(int i = 0; i < AllLetters.Length; i++)
-        {
-            _LetterStates[i] = new LetterState(AllLetters[i], LearningState.New);
-        }
-        _NewLetterAmount = AllLetters.Length;
-        _LearndLetterAmount = 0;
-        _MasterdLetterAmount = 0;
+        foreach (char letter in alphabet)
+            _AllLetters[0].Add(letter);
 
-        _CurrentLetter = GetRandomLetter(LearningState.New);
-        _CurrentLearnState = LearningState.New;
+        _AllLetters[1].Clear();
+        _AllLetters[2].Clear();
+
+        IsInitalized = true;
     }
-    
 
-    public static char GetNewLetterChar( LearningState goal, bool skiped = true)
+    #region GetLetter
+    public static char GetLetterMode(bool TestMode)
     {
-        if(GetStateAmount(goal - 1) > 0)
-            _CurrentLearnState = goal - 1;
-
-        if (_LetterStates.Length < 1)
-            Init();
-
-        if(skiped)
+        if(TestMode)
         {
-            _CurrentLetter.SkippedAmount++;
-            if(_CurrentLetter.SkippedAmount > AmountOfSkip)
-            {
-                ChangeToNextState(goal);
-            }
+            return GetLetter(_TestOrder);
         }
         else
         {
-            ChangeToNextState(goal);
+            return GetLetter(_LearnOrder);
         }
-        
-        _CurrentLetter = GetRandomLetter(_CurrentLearnState);
 
-        return _CurrentLetter.Letter;
     }
 
-
-
-    
-    private static LetterState GetRandomLetter(LearningState stateType)
+    private static char GetLetter(int[] order)
     {
-        switch(stateType)
+        if (IsInitalized)
         {
-            case LearningState.New:
-                return _LetterStates[Random.Range(0, _NewLetterAmount)];
-            case LearningState.Learned:
-                return _LetterStates[Random.Range(0, _LearndLetterAmount) + _NewLetterAmount];
-            case LearningState.Masterd:
-                return _LetterStates[Random.Range(0, _MasterdLetterAmount) + _NewLetterAmount + _LearndLetterAmount];
-            default:
-                return _LetterStates[Random.Range(0, _LetterStates.Length)];
-        }
-    }
+            char letter;
 
-    private static void ChangeToNextState(LearningState state)
-    {
-        if (_CurrentLetter.LearnState.Equals(state))
-            return;
-        _CurrentLetter.LearnState = state;
-        IncreaseAmount(_CurrentLearnState);
-        SortCurrentInLetters();
-    }
-
-    // TODO swap current with biggest smaller
-    private static void SortCurrentInLetters()
-    {
-        // insertion sort
-        int indexCurrent = GetIndex<LetterState>(_CurrentLetter, _LetterStates);
-
-        for(int i = 1; i < _LetterStates.Length; i++)
-        {
-            if(_LetterStates[i].LearnState > _CurrentLetter.LearnState)
+            for (int i = 0; i < _AllLetters.Length; i++)
             {
-                SwapLetterStates(_CurrentLetter, indexCurrent, _LetterStates[i-1], i-1);
+                if (GetRndLetterFromList(_AllLetters[order[i]], out letter))
+                    return letter;
             }
-
-            if(i == _LetterStates.Length-1)
-            {
-                SwapLetterStates(_CurrentLetter, indexCurrent, _LetterStates[i], i);
-            }
-
         }
+
+        return 'A';
     }
 
-    private static void IncreaseAmount(LearningState state)
+    private static bool GetRndLetterFromList(List<char> list, out char t)
     {
-        switch(state)
+        t = ' ';
+        if (list.Count > 0)
         {
-            case LearningState.New:
-                _NewLetterAmount++;
-                break;
-            case LearningState.Learned:
-                _LearndLetterAmount++;
-                _NewLetterAmount--;
-                break;
-            case LearningState.Masterd:
-                _MasterdLetterAmount++;
-                _LearndLetterAmount--;
-                break;
+            t = list[Random.Range(0, list.Count)];
+            return true;
         }
-
-        if(_NewLetterAmount < 1)
-        {
-            _CurrentLearnState = LearningState.Learned;
-        }
-        if(_LearndLetterAmount < 1)
-        {
-            _CurrentLearnState = LearningState.Masterd;
-        }
+        return false;
     }
+    #endregion
 
-    private static int GetStateAmount(LearningState state)
+    #region IncreaseScore
+
+    public static void IncreaseLetterScore(char letter, bool Testmode)
     {
-        switch (state)
+        if(Testmode)
         {
-            case LearningState.New:
-                return _NewLetterAmount;
-            case LearningState.Learned:
-                return _LearndLetterAmount;
-            case LearningState.Masterd:
-                return _MasterdLetterAmount;
+            MasterdLetter(letter);
         }
-        return 0;
-    }
-
-    private static void SwapLetterStates(LetterState element1,
-                                         int index1, 
-                                         LetterState element2, 
-                                         int index2)
-    {
-        _LetterStates[index1] = element2;
-        _LetterStates[index2] = element1;
-
-    }
-
-    private static int GetIndex<T>(T element, T[] array)
-    {
-        for(int i = 0; i < array.Length; i++)
+        else
         {
-            if (array[i].Equals(element))
-                return i;
+            LearendLetter(letter);
         }
-        return -1;
     }
-    /// <summary>
-    /// Displays a new letter on the AlphabetScreen
-    /// </summary>
-    /// <returns>The new letter that is displayed on the AlphabetScreen</returns>
-    //private static char GetNewLetter()
-    //{
-    //    char rndLetter = GetRandomAlphabetLetter();
-    //    if (_CurrentLetter == rndLetter)
-    //    {
-    //        return GetNewLetter();
-    //    }
-    //    _CurrentLetter = rndLetter;
-    //    CurrentLetterText.text = _CurrentLetter.ToString();
 
-    //    return _CurrentLetter;
-    //}
+    private static void LearendLetter(char letter)
+    {
+        _AllLetters[0].Remove(letter);
+        _AllLetters[1].Add(letter);
+    }
 
+    private static void MasterdLetter(char letter)
+    {
+        _AllLetters[1].Remove(letter);
+        _AllLetters[2].Add(letter);
+    }
 
+    #endregion
 }
