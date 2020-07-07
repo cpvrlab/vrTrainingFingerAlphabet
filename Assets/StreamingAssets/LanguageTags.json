@@ -12,7 +12,7 @@
     "Opmerking"
   ],
   "DISCLAMER_TEXT": [
-    "Don’t try to force your hand into a Handpose! \n Press the skip button instead. The application is not perfect for every hand type. The letters J, R and Z are not implemented, because they contain movements or need to cross fingers. The Letter M and N are a littel bit diffrent for tracking reasons. Some hand shapes are also oriented to the back, hand shapes are usually always to be pointed outwards. \n Press the gray button to continue...",
+    "Don’t try to force your hand into a Handpose! \n Press the skip button instead. The application is not perfect for every hand type. The letters J, R and Z are not implemented, because they contain movements or need to cross fingers. The letter M and N are a little bit different for tracking reasons. Some hand shapes are also oriented to the back, hand shapes are usually always to be pointed outwards. \n Press the gray button to continue...",
 
     "Krampfen Sie nich Ihre Hand in eine Handpose! \n Drücken Sie besser den Überspring button, die Applikation ist nicht prefekt. \n Die Buchstaben J, R und Z konnten nicht implementiert werden, da diese Bewegungen oder fingerkreuzngen beinhalten. Manche Handformen sind auch rückseitig orientiert, Handformen sind in der Regel immer gegen aussen zu zeigen.  \n Drücken Sie den Grauen button um fortzusetzen...",
 
@@ -21,7 +21,7 @@
     "Probeer je hand niet te forceren in een Handpose! \n Druk in plaats daarvan op de skip-knop. De toepassing is niet perfect voor elk type hand. \n De letters F, J, R, X en Z zijn niet geimplementeerd, omdat ze bewegingen bevatten of vingers moeten kruisen. Sommige handvormen zijn ook op de achterkant georiënteerd, de handvormen zijn meestal altijd naar buiten gericht. \n Druk op de grijze knop om verder te gaan..."
   ],
   "START_TITEL": [
-    "VR-Trainingsapplication for \n ASL Fingeralphabet",
+    "VR Training Application for \n ASL finger alphabet",
     "VR-Trainingsapplikation für \n das Deutsches Fingeralphabet",
     "VR-Application d'entrainement pour l'alphabet des signes en langue françaises.",
     "VR-trainingsapplicatie voor het Nederlandse vingeralfabet"
@@ -45,7 +45,7 @@
     "Instellingen"
   ],
   "ALPHABET_TEXT": [
-    "The current asked \n Letter is:",
+    "The current asked \n letter is:",
     "Der aktuell gefragte \n Buchstabe ist:",
     "La lettre actuellement \n demandée est:",
     "De letter die op dit moment \n wordt gevraagd is:"
