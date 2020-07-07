@@ -32,10 +32,10 @@ Material:
     - Vector1_C7F9BC69: 15
     - Vector1_DFA4C9D3: 2
     - Vector1_ED18166C: 1000
-    - Vector1_F0BE3006: 2
+    - Vector1_F0BE3006: 1.69
     - Vector1_F3A863FF: 16
     m_Colors:
-    - Color_4089CE7A: {r: 0.6431373, g: 0.82773715, b: 0.8509804, a: 0.27058825}
+    - Color_4089CE7A: {r: 0.6431373, g: 0.7553998, b: 0.8509804, a: 0.27058825}
     - Color_982234E: {r: 1, g: 1, b: 1, a: 0.80784315}
     - Vector4_B6649628: {r: 0, g: 1, b: -0.3, a: 2.7}
     - Vector4_F9BF86A4: {r: 1, g: 0, b: 0, a: 90}

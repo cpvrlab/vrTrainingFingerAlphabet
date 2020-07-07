@@ -15,6 +15,8 @@ public class DisclamerManager : MonoBehaviour
     public GameObject[] HandednessGameObjects;
 
     public VRUIToggleBehaviour ToggleButton;
+
+    private AudioSource clickAudio;
     // Start is called before the first frame update
     void Awake()
     {
@@ -38,7 +40,10 @@ public class DisclamerManager : MonoBehaviour
             // if language is saved, set it to
             LanguageManager.language = (Language)PlayerPrefs.GetInt("Language", 0);
         }
-        
+
+        clickAudio = GetComponent<AudioSource>();
+
+
     }
 
     public void ShowDisclamer()
@@ -58,6 +63,8 @@ public class DisclamerManager : MonoBehaviour
 
     public void ShowHandedness()
     {
+        clickAudio.Play(0);
+
         // hide Disclamer
         foreach (GameObject disclamer in DisclamerGameObjects)
             disclamer.SetActive(false);
@@ -86,12 +93,16 @@ public class DisclamerManager : MonoBehaviour
 
         LearnManger.IsInitalized = false;
 
+        clickAudio.Play(0);
+
     }
 
     public void SetHandedness(int handednessId)
     {
         PlayerPrefs.SetInt("Handedness", handednessId);
         HandednessManager.SetHandedness(handednessId);
+
+        clickAudio.Play(0);
     }
 
 

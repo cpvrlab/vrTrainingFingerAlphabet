@@ -56,6 +56,8 @@ The Unity Project uses folowing plugins:
 | ui_ux_in_vr_2019_2 | https://github.com/soma1294/ui_ux_in_vr_2019_2 |
 | Oculus Integration | https://assetstore.unity.com/packages/tools/integration/oculus-integration-82022 |
 | JSON .NET For Unity | https://assetstore.unity.com/packages/tools/input-management/json-net-for-unity-11347#description |
+| Monumental Journey | https://www.youtube.com/audiolibrary/music?nv=1 |
+| All Sound Effects | https://bigsoundbank.com/ |
 
 
 ## Handform validation
@@ -79,19 +81,10 @@ In the insight scene is a save button.
 When pressed it creates a Handformstruct:\
 ![structimage](https://github.com/cpvrlab/vrTrainingFingerAlphabet/blob/master/Assets/Documents/DocumentImages/HandformStruct.png)
 
-This Handformstruct will then be saved in the handdata.txt file.
-Note: I wanted to save it in a json file but I had insufficent time.\
-The Textfile is as followed formated:
+This Handformstruct will then be saved in the handdata.json file.
 
-| Char | Description |
-| ------ | ------ |
-| \ | Split the Attributs of the handstruct |
-| {} | Segment the OVRBone Objects |
-| : | Segment the OVRBone Attributs |
-| () | Segment the Transform values |
-| , | Segment the float values |
 
-The Textfile gets then splited and converts the values back to a handformstruct...
+The Jsonfile will be converted to the values of a handformstruct...
 
 ## Domainmodel
 ![structimage](https://github.com/cpvrlab/vrTrainingFingerAlphabet/blob/master/Assets/Documents/DocumentImages/KlassendiagrammRealisierung2.png)

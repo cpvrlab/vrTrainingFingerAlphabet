@@ -1043,11 +1043,21 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: dc5ad5a24f50f514782349338cc7caa9, type: 2}
+    - target: {fileID: 2376093626414727732, guid: 09148a20c61669b43b7ffa8b9da4cd90,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2376136860151823482, guid: 09148a20c61669b43b7ffa8b9da4cd90,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: dc5ad5a24f50f514782349338cc7caa9, type: 2}
+    - target: {fileID: 2376136860151823482, guid: 09148a20c61669b43b7ffa8b9da4cd90,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2386477697284580208, guid: 09148a20c61669b43b7ffa8b9da4cd90,
         type: 3}
       propertyPath: m_Name
@@ -2068,7 +2078,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 9a6c256b56bcdd449babd3ad63692ea6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -15
+      value: -14
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 9a6c256b56bcdd449babd3ad63692ea6,
         type: 3}
@@ -2127,6 +2137,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a6c256b56bcdd449babd3ad63692ea6, type: 3}
+--- !u!1 &1951520390 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 9a6c256b56bcdd449babd3ad63692ea6,
+    type: 3}
+  m_PrefabInstance: {fileID: 1951520389}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1951520391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951520390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d8ce2b1e4a7a24469373f9ce574b274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0.6431373, g: 0.8509804, b: 0.7254902, a: 0}
 --- !u!1001 &1958347475
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2731,6 +2760,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1666945224134663437, guid: 42ca5fe4ef53abb4e95831bbf9315591,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1861857355709511072, guid: 42ca5fe4ef53abb4e95831bbf9315591,
         type: 3}
       propertyPath: m_Name
@@ -2994,7 +3028,7 @@ PrefabInstance:
     - target: {fileID: 8779549256124770252, guid: 42ca5fe4ef53abb4e95831bbf9315591,
         type: 3}
       propertyPath: m_onVRUIButtonDown.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8779549256124770252, guid: 42ca5fe4ef53abb4e95831bbf9315591,
         type: 3}
@@ -3046,6 +3080,31 @@ PrefabInstance:
       propertyPath: useGestureController
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8779549256124770252, guid: 42ca5fe4ef53abb4e95831bbf9315591,
+        type: 3}
+      propertyPath: m_onVRUIButtonDown.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8779549256124770252, guid: 42ca5fe4ef53abb4e95831bbf9315591,
+        type: 3}
+      propertyPath: m_onVRUIButtonDown.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8779549256124770252, guid: 42ca5fe4ef53abb4e95831bbf9315591,
+        type: 3}
+      propertyPath: m_onVRUIButtonDown.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 5810999327177106950}
+    - target: {fileID: 8779549256124770252, guid: 42ca5fe4ef53abb4e95831bbf9315591,
+        type: 3}
+      propertyPath: m_onVRUIButtonDown.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 8779549256124770252, guid: 42ca5fe4ef53abb4e95831bbf9315591,
+        type: 3}
+      propertyPath: m_onVRUIButtonDown.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8904590684627367087, guid: 42ca5fe4ef53abb4e95831bbf9315591,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3070,6 +3129,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.000000044703484
+      objectReference: {fileID: 0}
+    - target: {fileID: 8904590685819163908, guid: 42ca5fe4ef53abb4e95831bbf9315591,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.10000001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 42ca5fe4ef53abb4e95831bbf9315591, type: 3}
@@ -3136,3 +3200,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIForHand: 0
+--- !u!82 &5810999327177106950 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1666945224134663437, guid: 42ca5fe4ef53abb4e95831bbf9315591,
+    type: 3}
+  m_PrefabInstance: {fileID: 5810999327177106942}
+  m_PrefabAsset: {fileID: 0}

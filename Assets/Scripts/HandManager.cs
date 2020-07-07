@@ -30,12 +30,15 @@ public class HandManager : MonoBehaviour
     private HandForm _ObjectiveHandForm;
     private HandFormValidator _Validator;
 
-
+    private AudioSource audioBlop;
     #endregion
 
     #region UnityFunctions
     private void Start()
     {
+
+        audioBlop = GetComponent<AudioSource>();
+
         _HandFormsLoaded = false;
         // _CurrentLetter = GetRandomAlphabetLetter();
         _Validator = GetComponent<HandFormValidator>();
@@ -67,6 +70,7 @@ public class HandManager : MonoBehaviour
             // When the HandForm was right for the SecondsUnitlCorrect 
             if(_CurrentTime - _PreviousFalseTime > SecondsUnitlCorrect)
             {
+                audioBlop.Play(0);
                 LearnManger.IncreaseLetterScore(_ObjectiveHandForm.AlphabeticCharacter, TestMode);
                 LoadNewHand();
                 _PreviousFalseTime = _CurrentTime;
